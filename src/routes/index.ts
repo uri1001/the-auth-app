@@ -1,0 +1,5 @@
+export { default as dataRouter } from './data'
+export { default as landingRouter } from './landing'
+export { default as loginRouter } from './login'
+export { default as logoutRouter } from './logout'
+export { default as registerRouter } from './register'
