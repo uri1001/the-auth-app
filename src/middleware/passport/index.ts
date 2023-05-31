@@ -1,2 +1,5 @@
 export { jwtKey } from './key'
-export { jwtStrategy, usrPwdStrategy } from './strategy'
+export { default as jwtStrategy } from './strategy/jwt'
+export { default as oidcStrategyInit } from './strategy/oidc'
+export { default as usrPwdStrategy } from './strategy/pwd'
+export { default as radiusStrategy } from './strategy/radius'

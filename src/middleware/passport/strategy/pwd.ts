@@ -1,10 +1,8 @@
-import { Strategy as JwtStrategy } from 'passport-jwt'
 import { Strategy as LocalStrategy } from 'passport-local'
 
 import scryptMcf from 'scrypt-mcf'
 
-import { jsonDb } from '../../db'
-import { jwtKey } from './key'
+import { jsonDb } from '../../../db'
 
 const verifyAccount = async (username: string, password: string, done: any): Promise<void> => {
     try {
@@ -31,34 +29,10 @@ export const usrPwdStrategy = new LocalStrategy(
     },
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     async (username, password, done) => {
+        console.log('Submitted username - ', username)
+        console.log('Submitted password - ', password)
         await verifyAccount(username, password, done)
     },
 )
 
-const cookieExtractor = (req: any): any => {
-    return Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
-}
-
-const opts = {
-    secretOrKey: jwtKey,
-    jwtFromRequest: cookieExtractor,
-}
-
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-export const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done) => {
-    try {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        const account: any = await jsonDb.getData(`/${jwtPayload.sub}`)
-
-        if (account != null) {
-            done(null, { username: jwtPayload.sub })
-            return
-        }
-
-        done(null, false)
-        return
-    } catch (error) {
-        console.error(error)
-        done(null, false)
-    }
-})
+export default usrPwdStrategy

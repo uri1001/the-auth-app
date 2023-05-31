@@ -8,18 +8,88 @@
     <body>
         <p><strong>Want to access EVM networks data?</strong></p>
         <p>Please log in to proceed</p>
-        <form action="/login" method="post">
-            <div>
-                <label>Username:</label>
-                <input type="text" name="username" placeholder="walrus" />
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password" placeholder="*********" />
-            </div>
-            <div>
-                <input type="submit" value="Log In Account" />
-            </div>
-        </form>
+        <br />
+        <div>
+            <button onclick="usr_pwd_form.showModal()">Log In with Username - Password</button>
+            <dialog id="usr_pwd_form">
+                <form action="/login" method="post">
+                    <div>
+                        <label>Username:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="walrus"
+                            pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="*********"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <input type="submit" value="Log In with Username - Password" />
+                    </div>
+                    <div>
+                        <button onclick="usr_pwd_form.close()">Close Panel</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+        <br />
+        <div>
+            <button onclick="radius_form.showModal()">Log In with Radius</button>
+            <dialog id="radius_form">
+                <form action="/login" method="post">
+                    <div>
+                        <label>Username:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="walrus"
+                            pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="*********"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <input type="submit" value="Log In with Radius" />
+                    </div>
+                    <div>
+                        <button onclick="radius_form.close()">Close Panel</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+        <br />
+        <div>
+            <button>
+                <a
+                    href="https://github.com/login/oauth/authorize?client_id=610991009baa64e1963e&redirect_url=http%3A%2F%2Flocalhost%3A3000%2Foauth2cb&scope=user%3Aemail"
+                    >Log In with GitHub</a
+                >
+            </button>
+        </div>
+        <br />
+        <div>
+            <button>
+                <a href="/oidc/login">Log In with Google</a>
+            </button>
+        </div>
     </body>
 </html>

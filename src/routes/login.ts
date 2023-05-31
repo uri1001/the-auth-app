@@ -3,14 +3,18 @@ import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import path from 'path'
 
+import dotenv from 'dotenv'
+
 import { jwtKey } from '../middleware/passport'
 
 import { type Account } from '../types'
 
+dotenv.config()
+
 const router = express.Router()
 
 router.get('/', (_req, res) => {
-    res.sendFile('public/login.html', { root: path.join(__dirname, '/../../') })
+    res.sendFile('login.html', { root: path.join(__dirname, '../..', 'public') })
 })
 
 router.post(
@@ -21,12 +25,17 @@ router.post(
 
         const account = req.user as Account
 
+        if (process.env.JWT_SESSION_LENGTH_SECONDS == null)
+            throw new Error('undefined jwt session length')
+
         const jwtClaims = {
+            jti: account.id,
             sub: account.username,
+            role: account.role,
+            email: account.email,
             iss: 'localhost:3000',
             aud: 'localhost:3000',
-            exp: Math.floor(Date.now() / 1000) + 604800,
-            role: 'user',
+            exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),
         }
 
         const token = jwt.sign(jwtClaims, jwtKey)
@@ -35,10 +44,12 @@ router.post(
             httpOnly: true,
             secure: true,
         })
-        res.json({ success: true, token: 'JWT ' + token })
 
         console.log(`Token sent. Debug at https://jwt.io/?value=${token}`)
         console.log(`Token secret (for verifying the signature): ${jwtKey.toString('base64')}`)
+
+        // res.json({ success: true, token: 'JWT ' + token })
+        res.redirect('/')
 
         res.end()
     },

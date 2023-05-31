@@ -1,5 +1,8 @@
 export interface Account {
-    username: string
     id: number
+    username: string
+    role: 'user' | 'admin'
+    email: string
+    emailVerified: boolean
     description: string
 }

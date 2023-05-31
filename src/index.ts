@@ -1,51 +1,88 @@
 import cookieParser from 'cookie-parser'
 import express from 'express'
+import session from 'express-session'
 import passport from 'passport'
+
+import { randomBytes } from 'crypto'
 
 import logger from 'morgan'
 
 import dotenv from 'dotenv'
 
-import { jwtStrategy, usrPwdStrategy } from './middleware/passport/strategy'
+import { jwtStrategy, oidcStrategyInit, radiusStrategy, usrPwdStrategy } from './middleware/passport'
 
-import { dataRouter, landingRouter, loginRouter, logoutRouter, registerRouter } from './routes'
+import {
+    dataRouter,
+    landingRouter,
+    loginRouter,
+    logoutRouter,
+    oauthRouter,
+    oidcRouter,
+    profileRouter,
+    registerRouter,
+} from './routes'
 
 dotenv.config()
 
-const app = express()
-const port = process.env.PORT
+const sessionKey = randomBytes(32)
 
-if (port === undefined) throw new Error('undefined port')
+const server = async (): Promise<void> => {
+    const app = express()
+    const port = process.env.PORT
 
-app.use(logger('dev'))
+    if (port === undefined) throw new Error('undefined port')
 
-passport.serializeUser((user, done) => {
-    done(null, user)
-})
+    app.use(logger('dev'))
 
-passport.deserializeUser((user, done) => {
-    done(null, user as any)
-})
+    app.use(
+        session({
+            secret: sessionKey.toString('base64url'),
+            resave: false,
+            saveUninitialized: false,
+        }),
+    )
 
-passport.use('username-password', usrPwdStrategy)
-passport.use('jwt', jwtStrategy)
+    passport.serializeUser((user, done) => {
+        done(null, user)
+    })
 
-app.use(express.urlencoded({ extended: true }))
-app.use(passport.initialize())
-app.use(cookieParser())
+    passport.deserializeUser((user, done) => {
+        done(null, user as any)
+    })
 
-app.use('/', landingRouter)
-app.use('/register', registerRouter)
-app.use('/login', loginRouter)
-app.use('/logout', logoutRouter)
-app.use('/data', dataRouter)
+    const oidcStrategy = await oidcStrategyInit()
 
-// @ts-expect-error error
-app.use((err, _req, res, _next) => {
-    console.error(err.stack)
-    res.status(500).send('Something broke!')
-})
+    passport.use('username-password', usrPwdStrategy)
+    passport.use('jwt', jwtStrategy)
+    passport.use('oidc', oidcStrategy)
+    passport.use('local-radius', radiusStrategy)
 
-app.listen(port, () => {
-    console.log(`App server listening at http://localhost:${port}`)
+    app.use(express.urlencoded({ extended: true }))
+    app.use(passport.initialize())
+    app.use(cookieParser())
+
+    app.use('/', landingRouter)
+
+    app.use('/register', registerRouter)
+    app.use('/login', loginRouter)
+    app.use('/oauth2', oauthRouter)
+    app.use('/oidc', oidcRouter)
+    app.use('/logout', logoutRouter)
+
+    app.use('/data', dataRouter)
+    app.use('/profile', profileRouter)
+
+    // @ts-expect-error error
+    app.use((err, _req, res, _next) => {
+        console.error(err.stack)
+        res.status(500).send('Something broke!')
+    })
+
+    app.listen(port, () => {
+        console.log(`App server listening at http://localhost:${port}`)
+    })
+}
+
+server().catch(error => {
+    console.log(error)
 })
