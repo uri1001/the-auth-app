@@ -28,9 +28,9 @@ router.post(
         let id: `${string}-${string}-${string}-${string}-${string}` = randomUUID()
         let role: string = 'user'
         // @ts-expect-error types does not exist
-        const username: string = req.user.sub.substring(0, req.user.sub.indexOf('@'))
+        const username: string = req.user.username.substring(0, req.user.username.indexOf('@'))
         // @ts-expect-error types does not exist
-        const email: string = req.user.sub
+        const email: string = req.user.username
         const emailVerifed: boolean = true
 
         // Check if user is registered
