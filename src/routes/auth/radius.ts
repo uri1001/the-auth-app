@@ -29,7 +29,7 @@ router.post(
             role: account.role,
             email: account.email,
             email_verified: account.email_verified,
-            iss: 'localhost:3000',
+            iss: 'radius',
             aud: 'localhost:3000',
             exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),
         }

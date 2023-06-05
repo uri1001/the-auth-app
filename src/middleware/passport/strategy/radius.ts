@@ -12,7 +12,7 @@ const client = new Client({
 })
 
 const opts = {
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     session: false,
 }

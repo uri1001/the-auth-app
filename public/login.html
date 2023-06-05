@@ -40,14 +40,14 @@
         <div>
             <button onclick="radius_form.showModal()">Log In with Radius</button>
             <dialog id="radius_form">
-                <form action="/login" method="post">
+                <form action="/radius" method="post">
                     <div>
-                        <label>Username:</label>
+                        <label>Email:</label>
                         <input
                             type="text"
-                            name="username"
-                            placeholder="walrus"
-                            pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
+                            name="email"
+                            placeholder="walrus@example.io"
+                            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                             required
                         />
                     </div>
