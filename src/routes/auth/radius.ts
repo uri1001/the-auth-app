@@ -2,11 +2,13 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 
+import { randomUUID } from 'crypto'
+
 import dotenv from 'dotenv'
 
 import { jwtKey } from '../../middleware/passport'
 
-import { type Account } from '../../types'
+import { jsonDb } from '../../db'
 
 dotenv.config()
 
@@ -15,20 +17,50 @@ const router = express.Router()
 router.post(
     '/',
     passport.authenticate('local-radius', { failureRedirect: '/error', session: false }),
-    (req, res) => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    async (req, res) => {
         if (req.user === undefined) throw new Error('request undefined')
 
-        const account = req.user as Account
+        console.log('Radius Connect Received Request')
+        console.log(req.user)
+        console.log('*******************************')
+
+        let id: `${string}-${string}-${string}-${string}-${string}` = randomUUID()
+        let role: string = 'user'
+        // @ts-expect-error types does not exist
+        const username: string = req.user.sub.substring(0, req.user.sub.indexOf('@'))
+        // @ts-expect-error types does not exist
+        const email: string = req.user.sub
+        const emailVerifed: boolean = true
+
+        // Check if user is registered
+        try {
+            const account: any = await jsonDb.getData(`/${username}`)
+            id = account.id
+            role = account.role
+        } catch (error) {
+            await jsonDb.push(`/${username}`, {
+                id,
+                username,
+                role,
+                email,
+                email_verified: emailVerifed,
+                given_name: '',
+                family_name: '',
+                description: '',
+                password: null,
+            })
+        }
 
         if (process.env.JWT_SESSION_LENGTH_SECONDS == null)
             throw new Error('undefined jwt session length')
 
         const jwtClaims = {
-            jti: account.id,
-            sub: account.username,
-            role: account.role,
-            email: account.email,
-            email_verified: account.email_verified,
+            jti: id,
+            sub: username,
+            role,
+            email,
+            email_verified: true,
             iss: 'radius',
             aud: 'localhost:3000',
             exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),

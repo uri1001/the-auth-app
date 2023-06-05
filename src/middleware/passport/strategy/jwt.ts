@@ -17,11 +17,15 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
     try {
         console.log('Submitted JWT Payload - ', jwtPayload)
 
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        let account: any = await jsonDb.getData(`/${jwtPayload.sub}`)
+        const isEmail: boolean = jwtPayload.sub.includes('@')
 
-        if (account == null) {
-            const usr = jwtPayload.email.substring(0, jwtPayload.email.indexOf('@'))
+        let account: any = null
+
+        if (!isEmail) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            account = await jsonDb.getData(`/${jwtPayload.sub}`)
+        } else {
+            const usr = jwtPayload.sub.substring(0, jwtPayload.sub.indexOf('@'))
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             account = await jsonDb.getData(`/${usr}`)
         }
