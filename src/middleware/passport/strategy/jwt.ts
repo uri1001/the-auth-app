@@ -17,14 +17,17 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
     try {
         console.log('Submitted JWT Payload - ', jwtPayload)
 
-        const isEmail: boolean = jwtPayload.sub.includes('@')
-
         let account: any = null
 
-        if (!isEmail) {
+        try {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             account = await jsonDb.getData(`/${jwtPayload.sub}`)
-        } else {
+        } catch (error) {
+            console.log(error)
+
+            const isEmail: boolean = jwtPayload.sub.includes('@')
+            if (!isEmail) throw new Error('invalid user database query')
+
             const usr = jwtPayload.sub.substring(0, jwtPayload.sub.indexOf('@'))
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             account = await jsonDb.getData(`/${usr}`)

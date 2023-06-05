@@ -29,8 +29,9 @@ router.get(
 
         let id: `${string}-${string}-${string}-${string}-${string}` = randomUUID()
         let role: string = 'user'
+
         // @ts-expect-error types does not exist
-        const username: string = req.user.email
+        const username: string = req.user.email.substring(0, req.user.email.indexOf('@'))
         // @ts-expect-error types does not exist
         const email: string = req.user.email
         // @ts-expect-error types does not exist
