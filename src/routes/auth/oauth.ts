@@ -6,9 +6,9 @@ import dotenv from 'dotenv'
 
 import { randomUUID } from 'crypto'
 
-import { jwtKey } from '../middleware/passport'
+import { jwtKey } from '../../middleware/passport'
 
-import { jsonDb } from '../db'
+import { jsonDb } from '../../db'
 
 dotenv.config()
 
@@ -70,7 +70,7 @@ router.get('/cb', async (req, res) => {
             username,
             role: userDataResponse.data.type.toLowerCase(),
             email,
-            email_verifed: false,
+            email_verified: false,
             description: '',
             password: null,
         })

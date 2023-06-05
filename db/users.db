@@ -1,1 +1,1 @@
-{}
+{"alice":{"id":"26100a01-b3b0-406f-8ef9-b8271c4e749b","username":"alice","role":"user","email":"alice@me.io","email_verified":false,"description":"","password":"$scrypt$ln=19,r=8,p=2$70NwkcpBdWr6KWT+WtAgDA$wduiVQXe0gJoyx1o0h8yWI7eQoDcC6Y6JQEPTX2iX9T6fTIzyd1W00UWbr3Gx3BuovA9xNP8YVbC8X5luUkYog"},"bob":{"id":"eabac32b-740b-40fb-8696-36a3bccdfd43","username":"bob","role":"user","email":"bob@me.io","email_verified":false,"description":"","password":"$scrypt$ln=17,r=8,p=1$o9n3capFaTobGNzkbShUZQ$8moNYDU/8aSFdwBhjePRoJKD37euD4/DOUQkecJIANs"}}

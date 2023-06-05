@@ -13,12 +13,14 @@ import { jwtStrategy, oidcStrategyInit, radiusStrategy, usrPwdStrategy } from '.
 
 import {
     dataRouter,
+    errorRouter,
     landingRouter,
     loginRouter,
     logoutRouter,
     oauthRouter,
     oidcRouter,
     profileRouter,
+    radiusRouter,
     registerRouter,
 } from './routes'
 
@@ -65,12 +67,15 @@ const server = async (): Promise<void> => {
 
     app.use('/register', registerRouter)
     app.use('/login', loginRouter)
+    app.use('/radius', radiusRouter)
     app.use('/oauth2', oauthRouter)
     app.use('/oidc', oidcRouter)
     app.use('/logout', logoutRouter)
 
     app.use('/data', dataRouter)
     app.use('/profile', profileRouter)
+
+    app.use('/error', errorRouter)
 
     // @ts-expect-error error
     app.use((err, _req, res, _next) => {

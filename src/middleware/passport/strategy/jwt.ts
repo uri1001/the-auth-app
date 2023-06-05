@@ -23,8 +23,11 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
         if (account != null) {
             done(null, {
                 username: jwtPayload.sub,
+                email: jwtPayload.email,
                 name: jwtPayload.name,
                 familyname: jwtPayload.fam,
+                credentialIssuer: jwtPayload.iss,
+                emailVerified: jwtPayload.email_verified,
             })
             return
         }

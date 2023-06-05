@@ -3,6 +3,6 @@ export interface Account {
     username: string
     role: 'user' | 'admin'
     email: string
-    emailVerified: boolean
+    email_verified: boolean
     description: string
 }

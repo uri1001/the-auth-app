@@ -1,25 +1,20 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
-import path from 'path'
 
 import dotenv from 'dotenv'
 
-import { jwtKey } from '../middleware/passport'
+import { jwtKey } from '../../middleware/passport'
 
-import { type Account } from '../types'
+import { type Account } from '../../types'
 
 dotenv.config()
 
 const router = express.Router()
 
-router.get('/', (_req, res) => {
-    res.sendFile('login.html', { root: path.join(__dirname, '../..', 'public') })
-})
-
 router.post(
     '/',
-    passport.authenticate('username-password', { failureRedirect: '/login', session: false }),
+    passport.authenticate('local-radius', { failureRedirect: '/error', session: false }),
     (req, res) => {
         if (req.user === undefined) throw new Error('request undefined')
 
@@ -33,6 +28,7 @@ router.post(
             sub: account.username,
             role: account.role,
             email: account.email,
+            email_verified: account.email_verified,
             iss: 'localhost:3000',
             aud: 'localhost:3000',
             exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),

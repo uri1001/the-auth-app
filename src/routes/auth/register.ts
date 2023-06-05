@@ -5,7 +5,7 @@ import scryptMcf from 'scrypt-mcf'
 
 import { randomUUID } from 'crypto'
 
-import { jsonDb } from '../db'
+import { jsonDb } from '../../db'
 
 const router = express.Router()
 
@@ -42,14 +42,14 @@ const register = async (
         username,
         role: 'user',
         email,
-        email_verifed: false,
+        email_verified: false,
         description: '',
         password: pwdHash,
     })
 }
 
 router.get('/', (_req, res) => {
-    res.sendFile('register.html', { root: path.join(__dirname, '../..', 'public') })
+    res.sendFile('register.html', { root: path.join(__dirname, '../../..', 'public') })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises

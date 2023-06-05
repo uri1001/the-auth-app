@@ -21,6 +21,7 @@
         "lint": "eslint . --config .eslintrc.json",
         "lint:fix": "eslint . --fix --config .eslintrc.json",
         "prestart": "npm run clean && npm run build",
+        "setup": "npm i && cp .env.example .env",
         "start": "node ./dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

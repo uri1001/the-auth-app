@@ -6,9 +6,9 @@ import dotenv from 'dotenv'
 
 import { randomUUID } from 'crypto'
 
-import { jwtKey } from '../middleware/passport'
+import { jwtKey } from '../../middleware/passport'
 
-import { jsonDb } from '../db'
+import { jsonDb } from '../../db'
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ router.get('/login', passport.authenticate('oidc', { scope: 'openid email profil
 
 router.get(
     '/cb',
-    passport.authenticate('oidc', { failureRedirect: '/login', failureMessage: true }),
+    passport.authenticate('oidc', { failureRedirect: '/error', failureMessage: true }),
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     async (req, res) => {
         if (req.user == null) throw new Error('undefined user openid authentication')
@@ -34,7 +34,7 @@ router.get(
         // @ts-expect-error types does not exist
         const email: string = req.user.email
         // @ts-expect-error types does not exist
-        const emailVerifed: boolean = req.user.email_verifed
+        const emailVerifed: boolean = req.user.email_verified
         // @ts-expect-error types does not exist
         const givenName: string = req.user.given_name
         // @ts-expect-error types does not exist
@@ -51,7 +51,7 @@ router.get(
                 username,
                 role,
                 email,
-                email_verifed: emailVerifed,
+                email_verified: emailVerifed,
                 given_name: givenName,
                 family_name: familyName,
                 description: '',
