@@ -96,12 +96,18 @@
 
 Express Node Server with Authentication & Authorization
 
-TBD
+Experimental server to test with different web service authentication methods. The protected endpoints return information about EVM networks and authenticated account information.
 <br/>
 <br/>
-TBD
+Integrates the following authentication methods:
 <br/>
-TBD
+-   Simple username - password
+-   OAuth2 with GitHub
+-   Open ID Connect with Google
+-   Radius Server (requires external Radius server running)
+<br/>
+
+Development has been done with minimal dependencies use.
 
 See the [open issues](https://github.com/uri1001/the-node-passport-app/issues) for a full list of proposed features (and known issues).
 
@@ -134,7 +140,7 @@ Package manager installation (npm)
     ```sh
     mv ./.env.example ./.env
     ```
-4. Introduce to `.env` the server port number
+4. Introduce to `.env` the server port number and other missing values
     ```js
     PORT = 'server-listen-port-number'
     ```
@@ -148,6 +154,7 @@ Package manager installation (npm)
 App initialization (npm)
 
 -   npm
+
     ```sh
     npm run start
     ```
@@ -169,6 +176,8 @@ TO BE DONE
 ### 5.1. Dependencies Documentation
 
 -   Morgan Documentation - [Official Docs](https://github.com/expressjs/morgan#morgan)
+
+-   Express Validator Documentation - [GitHub Repository](https://github.com/express-validator/express-validator)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
