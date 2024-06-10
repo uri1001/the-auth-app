@@ -9,7 +9,12 @@ import logger from 'morgan'
 
 import dotenv from 'dotenv'
 
-import { jwtStrategy, oidcStrategyInit, radiusStrategy, usrPwdStrategy } from './middleware/passport'
+import {
+    jwtStrategy,
+    oidcStrategyInit,
+    radiusStrategy,
+    usrPwdStrategy,
+} from './middleware/passport/index.js'
 
 import {
     dataRouter,
@@ -22,7 +27,7 @@ import {
     profileRouter,
     radiusRouter,
     registerRouter,
-} from './routes'
+} from './routes/index.js'
 
 dotenv.config()
 

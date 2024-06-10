@@ -1,0 +1,20 @@
+{
+    "alice": {
+        "id": "726e56c6-0ab8-4d76-849c-7a83787e53e6",
+        "username": "alice",
+        "role": "user",
+        "email": "alice@me.io",
+        "email_verified": false,
+        "description": "",
+        "password": "$2b$10$EX.9vllmERvvAnqlQls1..U2EeRIYCKXEpxvWK7ifJ0yyezp1hWj."
+    },
+    "bob": {
+        "id": "a9b87f26-e472-47a4-bea4-350a3330c8ac",
+        "username": "bob",
+        "role": "user",
+        "email": "bob@me.io",
+        "email_verified": false,
+        "description": "",
+        "password": "$2b$16$kxaqgBpEfUfqCJEb5nVcxOnU4dlcy5lrXZfjW9EUSiz34ZQkjs0Hm"
+    }
+}

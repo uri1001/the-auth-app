@@ -1,8 +1,8 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 
-import scryptMcf from 'scrypt-mcf'
+import bcrypt from 'bcrypt'
 
-import { jsonDb } from '../../../db'
+import { jsonDb } from '../../../db/index.js'
 
 const verifyAccount = async (username: string, password: string, done: any): Promise<void> => {
     try {
@@ -12,10 +12,10 @@ const verifyAccount = async (username: string, password: string, done: any): Pro
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         console.log(`DB Fetched Account: ${account.username} - ${account.password}`)
 
-        if (await scryptMcf.verify(password, account.password)) return done(null, account)
+        if (bcrypt.compareSync(password, account.password)) return done(null, account)
 
         return done(null, false)
-    } catch (error) {
+    } catch (error: any) {
         console.log(error)
         return done(null, false)
     }

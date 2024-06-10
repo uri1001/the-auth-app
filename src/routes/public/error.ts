@@ -1,10 +1,11 @@
 import express from 'express'
-import path from 'path'
+
+import root from '../system.js'
 
 const router = express.Router()
 
 router.get('/', (_req, res) => {
-    res.sendFile('error.html', { root: path.join(__dirname, '../../..', 'public') })
+    res.sendFile('error.html', { root })
 })
 
 export default router

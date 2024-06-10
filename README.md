@@ -101,11 +101,12 @@ Experimental server to test with different web service authentication methods. T
 <br/>
 Integrates the following authentication methods:
 <br/>
+
 -   Simple username - password
 -   OAuth2 with GitHub
 -   Open ID Connect with Google
 -   Radius Server (requires external Radius server running)
-<br/>
+    <br/>
 
 Development has been done with minimal dependencies use.
 
@@ -132,15 +133,11 @@ Package manager installation (npm)
     ```sh
     git clone https://github.com/uri1001/the-node-passport-app.git
     ```
-2. Install NPM packages
+2. Proceed to set up the project
     ```sh
-    npm install
+    npm run setup
     ```
-3. Rename `.env.example` file to `.env`
-    ```sh
-    mv ./.env.example ./.env
-    ```
-4. Introduce to `.env` the server port number and other missing values
+3. Introduce to `.env` the server port number and other missing values
     ```js
     PORT = 'server-listen-port-number'
     ```

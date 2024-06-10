@@ -1,11 +1,11 @@
 import express from 'express'
-import path from 'path'
 
-import scryptMcf from 'scrypt-mcf'
+import bcrypt from 'bcrypt'
 
 import { randomUUID } from 'crypto'
 
-import { jsonDb } from '../../db'
+import { jsonDb } from '../../db/index.js'
+import root from '../system.js'
 
 const router = express.Router()
 
@@ -22,16 +22,17 @@ const register = async (
     console.log('Registration Password - ', password)
     console.log('KDF Option - ', kdf)
 
+    if (await jsonDb.exists(`/${username}`)) throw new Error('username already exists')
+
     if (kdf === 'slow') {
         console.time('slow-key-derivation-function')
-        pwdHash = await scryptMcf.hash(password, {
-            derivedKeyLength: 64,
-            scryptParams: { logN: 19, r: 8, p: 2 },
-        })
+        const salt = bcrypt.genSaltSync(16)
+        pwdHash = bcrypt.hashSync(password, salt)
         console.timeEnd('slow-key-derivation-function')
     } else {
         console.time('fast-key-derivation-function')
-        pwdHash = await scryptMcf.hash(password)
+        const salt = bcrypt.genSaltSync(10)
+        pwdHash = bcrypt.hashSync(password, salt)
         console.timeEnd('fast-key-derivation-function')
     }
 
@@ -49,20 +50,20 @@ const register = async (
 }
 
 router.get('/', (_req, res) => {
-    res.sendFile('register.html', { root: path.join(__dirname, '../../..', 'public') })
+    res.sendFile('register.html', { root })
 })
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.post('/', async (req, res) => {
     const { username, email, password, kdf } = req.body
 
-    await register(username as string, email as string, password as string, kdf as string).catch(
-        error => {
-            console.log(error)
-        },
-    )
-
-    res.redirect('/login')
+    try {
+        await register(username as string, email as string, password as string, kdf as string)
+        res.redirect('/login')
+    } catch (error: any) {
+        console.log(error)
+        res.json(error.message)
+    }
     res.end()
 })
 

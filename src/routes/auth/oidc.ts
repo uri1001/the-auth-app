@@ -6,9 +6,9 @@ import dotenv from 'dotenv'
 
 import { randomUUID } from 'crypto'
 
-import { jwtKey } from '../../middleware/passport'
+import { jwtKey } from '../../middleware/passport/index.js'
 
-import { jsonDb } from '../../db'
+import { jsonDb } from '../../db/index.js'
 
 dotenv.config()
 
@@ -46,7 +46,7 @@ router.get(
             const account: any = await jsonDb.getData(`/${username}`)
             id = account.id
             role = account.role
-        } catch (error) {
+        } catch (error: any) {
             await jsonDb.push(`/${username}`, {
                 id,
                 username,

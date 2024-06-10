@@ -1,11 +1,10 @@
 import { Strategy as JwtStrategy } from 'passport-jwt'
 
-import { jsonDb } from '../../../db'
-import { jwtKey } from '../key'
+import { jsonDb } from '../../../db/index.js'
+import { jwtKey } from '../key.js'
 
-const cookieExtractor = (req: any): any => {
-    return Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
-}
+const cookieExtractor = (req: any): any =>
+    Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
 
 const opts = {
     secretOrKey: jwtKey,
@@ -22,7 +21,7 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
         try {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             account = await jsonDb.getData(`/${jwtPayload.sub}`)
-        } catch (error) {
+        } catch (error: any) {
             console.log(error)
 
             const isEmail: boolean = jwtPayload.sub.includes('@')
@@ -46,7 +45,7 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
         }
 
         done(null, false)
-    } catch (error) {
+    } catch (error: any) {
         console.error(error)
         done(null, false)
     }

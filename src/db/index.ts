@@ -1,1 +1,1 @@
-export { default as jsonDb } from './jsonDb'
+export { default as jsonDb } from './jsonDb.js'

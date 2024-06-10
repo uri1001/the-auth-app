@@ -1,20 +1,21 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
-import path from 'path'
 
 import dotenv from 'dotenv'
 
-import { jwtKey } from '../../middleware/passport'
+import { jwtKey } from '../../middleware/passport/index.js'
 
-import { type Account } from '../../types'
+import { type Account } from '../../types.js'
+
+import root from '../system.js'
 
 dotenv.config()
 
 const router = express.Router()
 
 router.get('/', (_req, res) => {
-    res.sendFile('login.html', { root: path.join(__dirname, '../../..', 'public') })
+    res.sendFile('login.html', { root })
 })
 
 router.post(
