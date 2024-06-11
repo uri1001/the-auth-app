@@ -1,5 +1,5 @@
 import cookieParser from 'cookie-parser'
-import express from 'express'
+import express, { type NextFunction, type Request, type Response } from 'express'
 import session from 'express-session'
 import passport from 'passport'
 
@@ -17,6 +17,7 @@ import {
 } from './middleware/passport/index.js'
 
 import {
+    credentialRouter,
     dataRouter,
     errorRouter,
     landingRouter,
@@ -76,14 +77,14 @@ const server = async (): Promise<void> => {
     app.use('/oauth2', oauthRouter)
     app.use('/oidc', oidcRouter)
     app.use('/logout', logoutRouter)
+    app.use('/credential', credentialRouter)
 
     app.use('/data', dataRouter)
     app.use('/profile', profileRouter)
 
     app.use('/error', errorRouter)
 
-    // @ts-expect-error error
-    app.use((err, _req, res, _next) => {
+    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
         console.error(err.stack)
         res.status(500).send('Something broke!')
     })

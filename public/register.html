@@ -6,8 +6,8 @@
     </head>
 
     <body>
-        <p><strong>Want to access EVM networks data?</strong></p>
-        <p>Please register to proceed</p>
+        <p><strong>Please Register to Proceed</strong></p>
+        <p>Username - Password Registration</p>
         <form action="/register" method="post">
             <div>
                 <label>Username:</label>
@@ -42,6 +42,88 @@
             </div>
             <div>
                 <input type="submit" value="Register Account" />
+            </div>
+        </form>
+        <br />
+        <br />
+        <p>Verifiable Credential Issuance</p>
+        <form action="/credential/register" method="post">
+            <div>
+                <label>First Name:</label>
+                <input
+                    type="text"
+                    name="first-name"
+                    placeholder="Walrus"
+                    pattern="^[A-Za-z][A-Za-z]{1,}$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Last Name:</label>
+                <input
+                    type="text"
+                    name="last-name"
+                    placeholder="Wild"
+                    pattern="^[A-Za-z][A-Za-z]{1,}$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="walrus"
+                    pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Email:</label>
+                <input
+                    type="text"
+                    name="email"
+                    placeholder="walrus@me.io"
+                    pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Company Name:</label>
+                <input
+                    type="text"
+                    name="company-name"
+                    placeholder="Walrus Inc."
+                    pattern="^[A-Za-z][A-Za-z]{1,}$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Company Identifier:</label>
+                <input type="text" name="company-identifier" placeholder="010101" required />
+            </div>
+            <div>
+                <label>Company Department:</label>
+                <input
+                    type="text"
+                    name="company-department"
+                    placeholder="Cybersecurity"
+                    pattern="^[A-Za-z][A-Za-z]{1,}$"
+                    required
+                />
+            </div>
+            <div>
+                <label>Role:</label>
+                <input
+                    type="text"
+                    name="role"
+                    placeholder="Blockchain Engineer"
+                    pattern="^[A-Za-z][A-Za-z]{1,}$"
+                    required
+                />
+            </div>
+            <div>
+                <input type="submit" value="Issue Credential" />
             </div>
         </form>
     </body>

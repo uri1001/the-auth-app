@@ -5,4 +5,5 @@ export interface Account {
     email: string
     email_verified: boolean
     description: string
+    password: string
 }

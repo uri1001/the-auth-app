@@ -4,12 +4,13 @@ import bcrypt from 'bcrypt'
 
 import { jsonDb } from '../../../db/index.js'
 
+import { type Account } from '../../../types.js'
+
 const verifyAccount = async (username: string, password: string, done: any): Promise<void> => {
     try {
-        const account: any = await jsonDb.getData(`/${username}`)
+        const account: Account = await jsonDb.getData(`/${username}`)
 
         console.log(`Account To Verify: ${username} - ${password}`)
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         console.log(`DB Fetched Account: ${account.username} - ${account.password}`)
 
         if (bcrypt.compareSync(password, account.password)) return done(null, account)

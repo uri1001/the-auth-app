@@ -20,13 +20,13 @@
     "rules": {
         "no-console": "warn",
         "prettier/prettier": "warn",
-        "indent": ["off"],
-        "comma-dangle": ["off"],
-        "multiline-ternary": ["off"],
-        "@typescript-eslint/comma-dangle": ["off"],
         "prefer-arrow-callback": ["error", { "allowNamedFunctions": false }],
         "func-style": ["error", "expression", { "allowArrowFunctions": true }],
         "no-var": "error",
-        "arrow-body-style": ["error", "as-needed"]
+        "arrow-body-style": ["error", "as-needed"],
+        "indent": ["off"],
+        "comma-dangle": ["off"],
+        "multiline-ternary": ["off"],
+        "@typescript-eslint/comma-dangle": ["off"]
     }
 }

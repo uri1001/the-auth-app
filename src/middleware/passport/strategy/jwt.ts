@@ -3,6 +3,8 @@ import { Strategy as JwtStrategy } from 'passport-jwt'
 import { jsonDb } from '../../../db/index.js'
 import { jwtKey } from '../key.js'
 
+import { type Account } from '../../../types.js'
+
 const cookieExtractor = (req: any): any =>
     Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
 
@@ -16,7 +18,7 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
     try {
         console.log('Submitted JWT Payload - ', jwtPayload)
 
-        let account: any = null
+        let account: Account
 
         try {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -27,8 +29,7 @@ const jwtStrategy = new JwtStrategy(opts, async (jwtPayload: any, done): Promise
             const isEmail: boolean = jwtPayload.sub.includes('@')
             if (!isEmail) throw new Error('invalid user database query')
 
-            const usr = jwtPayload.sub.substring(0, jwtPayload.sub.indexOf('@'))
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            const usr: string = jwtPayload.sub.substring(0, jwtPayload.sub.indexOf('@'))
             account = await jsonDb.getData(`/${usr}`)
         }
 
