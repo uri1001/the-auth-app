@@ -1,108 +1,46 @@
-import axios from 'axios'
-import express from 'express'
-import jwt from 'jsonwebtoken'
+import express, { type Request, type Response } from 'express'
 
-import dotenv from 'dotenv'
+import { reqTokenOauth, reqUserDataOauth } from '../../adapters/index.js'
+import { AuthStrategies, loginAccount, registerAccount } from '../../services/index.js'
 
-import { randomUUID } from 'crypto'
-
-import { jwtKey } from '../../middleware/passport/index.js'
-
-import { jsonDb } from '../../db/index.js'
-
-dotenv.config()
+import { getEnv } from '../../system.js'
 
 const router = express.Router()
 
+// TODO
+// COULD BE IMPROVED BY MOVING ALL LOGIC TO THE PASSPORT STRATEGY
+// IMPLEMENT LIKE THE OTHERS
+
+// login callback
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.get('/cb', async (req, res) => {
-    const code = req.query.code
-    if (code == null) {
-        res.status(400)
-        throw new Error('no code provided')
-    }
+router.get('/cb', async (req: Request, res: Response): Promise<void> => {
+    if (req.query.code == null) throw new Error('no request code provided')
 
-    if (process.env.OAUTH2_TOKEN_URL == null) throw new Error('undefined oauth2 token endpoint')
+    // request jwt to oauth provider
+    const params = await reqTokenOauth(
+        getEnv('OAUTH2_TOKEN_URL'),
+        getEnv('OAUTH2_CLIENT_ID'),
+        getEnv('OAUTH2_CLIENT_SECRET'),
+        req.query.code as string,
+    )
 
-    const tokenResponse = await axios.post(process.env.OAUTH2_TOKEN_URL, {
-        client_id: process.env.OAUTH2_CLIENT_ID,
-        client_secret: process.env.OAUTH2_CLIENT_SECRET,
-        code,
-    })
-
-    console.log(`\n--- Token Response Data ---`)
-    console.log(tokenResponse.data)
-
-    const params = new URLSearchParams(tokenResponse.data)
+    // validate oauth token & scope
     const accessToken = params.get('access_token')
     const scope = params.get('scope')
 
-    if (scope !== 'user:email') {
-        res.send('user did not consent to release email').status(401)
-        throw new Error('user did not consent to release email')
-    }
-
-    if (process.env.USER_API == null) throw new Error('undefined user api endpoint')
     if (accessToken == null) throw new Error('undefined access token')
+    if (scope !== 'user:email') throw new Error('user did not consent to release email')
 
-    const userDataResponse = await axios.get(process.env.USER_API, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
+    // request user data to oauth provider
+    const userData = await reqUserDataOauth(getEnv('USER_API'), accessToken)
 
-    console.log(`\n--- User API Endpoint Response ---`)
-    console.log(userDataResponse.data)
+    // register successful authentication - account could be registered
+    registerAccount(AuthStrategies.OAUTH, userData)
 
-    let id: `${string}-${string}-${string}-${string}-${string}` = randomUUID()
-    let role: string = 'user'
-    const username: string = userDataResponse.data.login
-    const email: string = userDataResponse.data.email
+    // login successful authentication
+    loginAccount(AuthStrategies.OAUTH, userData, res)
 
-    // Check if user is registered
-    try {
-        const account: any = await jsonDb.getData(`/${username}`)
-        id = account.id
-        role = account.role
-    } catch (error: any) {
-        await jsonDb.push(`/${username}`, {
-            id,
-            username,
-            role: userDataResponse.data.type.toLowerCase(),
-            email,
-            email_verified: false,
-            description: '',
-            password: null,
-        })
-    }
-
-    if (process.env.JWT_SESSION_LENGTH_SECONDS == null)
-        throw new Error('undefined jwt session length')
-
-    const jwtClaims = {
-        jti: id,
-        sub: username,
-        role,
-        email,
-        iss: 'github',
-        aud: 'localhost:3000',
-        exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),
-    }
-
-    const token = jwt.sign(jwtClaims, jwtKey)
-
-    res.cookie('auth-jwt', token, {
-        httpOnly: true,
-        secure: true,
-    })
-
-    console.log(`Token sent. Debug at https://jwt.io/?value=${token}`)
-    console.log(`Token secret (for verifying the signature): ${jwtKey.toString('base64')}`)
-
-    // res.json({ success: true, token: 'JWT ' + token })
     res.redirect('/')
-
-    res.end()
 })
 
 export default router

@@ -1,0 +1,36 @@
+{
+    "accounts": [
+        {
+            "id": "726e56c6-0ab8-4d76-849c-7a83787e53e6",
+            "username": "alice",
+            "firstName": "alice",
+            "lastName": "alcatraz",
+            "email": "alice@me.io",
+            "emailVerified": false,
+            "companyName": "alphabet inc",
+            "companyId": "0",
+            "employeeId": "0",
+            "workplace": "cybersecurity",
+            "role": "research",
+            "password": "$2b$10$EX.9vllmERvvAnqlQls1..U2EeRIYCKXEpxvWK7ifJ0yyezp1hWj."
+        },
+        {
+            "id": "a9b87f26-e472-47a4-bea4-350a3330c8ac",
+            "username": "bob",
+            "firstName": "bob",
+            "lastName": "bonaparte",
+            "email": "bob@me.io",
+            "emailVerified": false,
+            "password": "$2b$16$kxaqgBpEfUfqCJEb5nVcxOnU4dlcy5lrXZfjW9EUSiz34ZQkjs0Hm"
+        },
+        {
+            "id": "28c9f411-b373-4e48-8c94-cb8a1105c015",
+            "username": "walrus",
+            "firstName": "",
+            "lastName": "",
+            "email": "walrus@me.io",
+            "emailVerified": false,
+            "password": "$2b$10$l3aU0eXQ2GPNz.oaEeyc5OQhtaJWWo.zRbIvhZRYp1E6vlifnPuhy"
+        }
+    ]
+}

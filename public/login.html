@@ -10,7 +10,7 @@
         <div>
             <button onclick="usr_pwd_form.showModal()">Log In with Username - Password</button>
             <dialog id="usr_pwd_form">
-                <form action="/login" method="post">
+                <form action="/pwd/login" method="post">
                     <div>
                         <label>Username:</label>
                         <input
@@ -36,35 +36,6 @@
         </div>
         <br />
         <div>
-            <button onclick="radius_form.showModal()">Log In with Radius</button>
-            <dialog id="radius_form">
-                <form action="/radius" method="post">
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder="walrus@example.io"
-                            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input type="password" name="password" placeholder="*********" required />
-                    </div>
-                    <div>
-                        <input type="submit" value="Log In with Radius" />
-                    </div>
-                    <div>
-                        <button onclick="radius_form.close()">Close Panel</button>
-                    </div>
-                    <p>Requires email username to match with registered account username</p>
-                </form>
-            </dialog>
-        </div>
-        <br />
-        <div>
             <button>
                 <a
                     href="https://github.com/login/oauth/authorize?client_id=610991009baa64e1963e&redirect_url=http%3A%2F%2Flocalhost%3A3000%2Foauth2cb&scope=user%3Aemail"
@@ -81,7 +52,7 @@
         <br />
         <div>
             <button>
-                <a href="/credential/login">Log In with Credential</a>
+                <a href="/vc/login">Log In with Credential</a>
             </button>
         </div>
     </body>

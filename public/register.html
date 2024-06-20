@@ -8,7 +8,7 @@
     <body>
         <p><strong>Please Register to Proceed</strong></p>
         <p>Username - Password Registration</p>
-        <form action="/register" method="post">
+        <form action="/pwd/register" method="post">
             <div>
                 <label>Username:</label>
                 <input
@@ -47,7 +47,7 @@
         <br />
         <br />
         <p>Verifiable Credential Issuance</p>
-        <form action="/credential/register" method="post">
+        <form action="/vc/register" method="post">
             <div>
                 <label>First Name:</label>
                 <input
@@ -100,13 +100,13 @@
             </div>
             <div>
                 <label>Company Identifier:</label>
-                <input type="text" name="company-identifier" placeholder="010101" required />
+                <input type="text" name="company-id" placeholder="010101" required />
             </div>
             <div>
-                <label>Company Department:</label>
+                <label>Company Workplace:</label>
                 <input
                     type="text"
-                    name="company-department"
+                    name="company-workplace"
                     placeholder="Cybersecurity"
                     pattern="^[A-Za-z][A-Za-z]{1,}$"
                     required

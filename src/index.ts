@@ -9,15 +9,9 @@ import logger from 'morgan'
 
 import dotenv from 'dotenv'
 
-import {
-    jwtStrategy,
-    oidcStrategyInit,
-    radiusStrategy,
-    usrPwdStrategy,
-} from './middleware/passport/index.js'
+import { jwtStrategy, oidcStrategyInit, pwdStrategy, vcStrategy } from './middleware/index.js'
 
 import {
-    credentialRouter,
     dataRouter,
     errorRouter,
     landingRouter,
@@ -26,8 +20,9 @@ import {
     oauthRouter,
     oidcRouter,
     profileRouter,
-    radiusRouter,
+    pwdRouter,
     registerRouter,
+    vcRouter,
 } from './routes/index.js'
 
 dotenv.config()
@@ -50,6 +45,7 @@ const server = async (): Promise<void> => {
         }),
     )
 
+    // middleware
     passport.serializeUser((user, done) => {
         done(null, user)
     })
@@ -60,37 +56,41 @@ const server = async (): Promise<void> => {
 
     const oidcStrategy = await oidcStrategyInit()
 
-    passport.use('username-password', usrPwdStrategy)
+    passport.use('pwd', pwdStrategy)
     passport.use('jwt', jwtStrategy)
     passport.use('oidc', oidcStrategy)
-    passport.use('local-radius', radiusStrategy)
+    passport.use('vc', vcStrategy)
 
     app.use(express.urlencoded({ extended: true }))
     app.use(passport.initialize())
     app.use(cookieParser())
 
+    // routes
     app.use('/', landingRouter)
 
-    app.use('/register', registerRouter)
     app.use('/login', loginRouter)
-    app.use('/radius', radiusRouter)
+    app.use('/logout', logoutRouter)
+    app.use('/register', registerRouter)
+
     app.use('/oauth2', oauthRouter)
     app.use('/oidc', oidcRouter)
-    app.use('/logout', logoutRouter)
-    app.use('/credential', credentialRouter)
+    app.use('/pwd', pwdRouter)
+    app.use('/vc', vcRouter)
 
     app.use('/data', dataRouter)
     app.use('/profile', profileRouter)
 
     app.use('/error', errorRouter)
 
-    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-        console.error(err.stack)
-        res.status(500).send('Something broke!')
+    // errors
+    app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
+        console.error(error.stack)
+        res.status(500).send('Something Broke')
     })
 
+    // server
     app.listen(port, () => {
-        console.log(`App server listening at http://localhost:${port}`)
+        console.log(`App Server Listening - http://localhost:${port}`)
     })
 }
 

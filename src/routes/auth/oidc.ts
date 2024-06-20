@@ -1,94 +1,28 @@
-import express from 'express'
-import jwt from 'jsonwebtoken'
+import express, { type Request, type Response } from 'express'
 import passport from 'passport'
 
-import dotenv from 'dotenv'
-
-import { randomUUID } from 'crypto'
-
-import { jwtKey } from '../../middleware/passport/index.js'
-
-import { jsonDb } from '../../db/index.js'
-
-dotenv.config()
+import { AuthStrategies, loginAccount, registerAccount } from '../../services/index.js'
 
 const router = express.Router()
 
+// login
 router.get('/login', passport.authenticate('oidc', { scope: 'openid email profile' }))
 
+// login callback
 router.get(
     '/cb',
     passport.authenticate('oidc', { failureRedirect: '/error', failureMessage: true }),
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    async (req, res) => {
-        if (req.user == null) throw new Error('undefined user openid authentication')
+    (req: Request, res: Response): void => {
+        if (req.user == null) throw new Error('request user undefined')
 
-        console.log('OpenID Connect Received Request')
-        console.log(req.user)
-        console.log('*******************************')
+        // register successful authentication - account could be registered
+        registerAccount(AuthStrategies.OIDC, req)
 
-        let id: `${string}-${string}-${string}-${string}-${string}` = randomUUID()
-        let role: string = 'user'
+        // login successful authetication
+        loginAccount(AuthStrategies.OIDC, req, res)
 
-        // @ts-expect-error types does not exist
-        const username: string = req.user.email.substring(0, req.user.email.indexOf('@'))
-        // @ts-expect-error types does not exist
-        const email: string = req.user.email
-        // @ts-expect-error types does not exist
-        const emailVerifed: boolean = req.user.email_verified
-        // @ts-expect-error types does not exist
-        const givenName: string = req.user.given_name
-        // @ts-expect-error types does not exist
-        const familyName: string = req.user.family_name
-
-        // Check if user is registered
-        try {
-            const account: any = await jsonDb.getData(`/${username}`)
-            id = account.id
-            role = account.role
-        } catch (error: any) {
-            await jsonDb.push(`/${username}`, {
-                id,
-                username,
-                role,
-                email,
-                email_verified: emailVerifed,
-                given_name: givenName,
-                family_name: familyName,
-                description: '',
-                password: null,
-            })
-        }
-
-        if (process.env.JWT_SESSION_LENGTH_SECONDS == null)
-            throw new Error('undefined jwt session length')
-
-        const jwtClaims = {
-            jti: id,
-            sub: username,
-            role,
-            email,
-            name: givenName,
-            fam: familyName,
-            iss: 'google',
-            aud: 'localhost:3000',
-            exp: Math.floor(Date.now() / 1000) + Number(process.env.JWT_SESSION_LENGTH_SECONDS),
-        }
-
-        const token = jwt.sign(jwtClaims, jwtKey)
-
-        res.cookie('auth-jwt', token, {
-            httpOnly: true,
-            secure: true,
-        })
-
-        console.log(`Token sent. Debug at https://jwt.io/?value=${token}`)
-        console.log(`Token secret (for verifying the signature): ${jwtKey.toString('base64')}\n`)
-
-        // res.json({ success: true, token: 'JWT ' + token })
         res.redirect('/')
-
-        res.end()
     },
 )
 
