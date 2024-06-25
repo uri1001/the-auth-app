@@ -1,9 +1,9 @@
-import { getAccount, type Account } from '../../db/index.js'
+import { fetchAccountsDb, type Account } from '../../db/index.js'
 
 import { AuthStrategies } from './strategies.js'
 
 const registeredAccount = (auth: AuthStrategies, req: any): Account | undefined => {
-    let accountKey: string
+    let accountKey: string = ''
 
     switch (auth) {
         case AuthStrategies.OAUTH:
@@ -15,19 +15,23 @@ const registeredAccount = (auth: AuthStrategies, req: any): Account | undefined 
         case AuthStrategies.PWD:
             accountKey = req.body.username
             break
+        case AuthStrategies.RADIUS:
+            accountKey = req.user.username
+            break
         case AuthStrategies.VC:
             accountKey = req.user.email
             break
     }
 
-    const account: Account | undefined = getAccount(accountKey)
+    const account: Account | undefined = fetchAccountsDb(accountKey)
 
     return account
 }
 
 export default registeredAccount
 
-// oauth -> username = req.login
-// oidc -> username = req.user.email
-// pwd -> username = req.body.username
-// vc -> username = req.user.email
+// oauth -> account = req.login
+// oidc -> account = req.user.email
+// pwd -> account = req.body.username
+// radius -> account = req.user.username
+// vc -> account = req.user.email

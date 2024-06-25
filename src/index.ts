@@ -7,9 +7,14 @@ import { randomBytes } from 'crypto'
 
 import logger from 'morgan'
 
-import dotenv from 'dotenv'
-
-import { jwtStrategy, oidcStrategyInit, pwdStrategy, vcStrategy } from './middleware/index.js'
+import {
+    jwtStrategy,
+    oauthStrategy,
+    oidcStrategyInit,
+    pwdStrategy,
+    radiusStrategy,
+    vcStrategy,
+} from './middleware/index.js'
 
 import {
     dataRouter,
@@ -21,17 +26,18 @@ import {
     oidcRouter,
     profileRouter,
     pwdRouter,
+    radiusRouter,
     registerRouter,
     vcRouter,
 } from './routes/index.js'
 
-dotenv.config()
+import { getEnv } from './system.js'
 
 const sessionKey = randomBytes(32)
 
 const server = async (): Promise<void> => {
     const app = express()
-    const port = process.env.PORT
+    const port = getEnv('PORT')
 
     if (port === undefined) throw new Error('undefined port')
 
@@ -59,6 +65,8 @@ const server = async (): Promise<void> => {
     passport.use('pwd', pwdStrategy)
     passport.use('jwt', jwtStrategy)
     passport.use('oidc', oidcStrategy)
+    passport.use('radius', radiusStrategy)
+    passport.use('oauth', oauthStrategy)
     passport.use('vc', vcStrategy)
 
     app.use(express.urlencoded({ extended: true }))
@@ -75,6 +83,7 @@ const server = async (): Promise<void> => {
     app.use('/oauth2', oauthRouter)
     app.use('/oidc', oidcRouter)
     app.use('/pwd', pwdRouter)
+    app.use('/radius', radiusRouter)
     app.use('/vc', vcRouter)
 
     app.use('/data', dataRouter)

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { randomUUID } from 'crypto'
 
-import { updateAccount, type Account } from '../../db/index.js'
+import { updateAccountsDb, type Account } from '../../db/index.js'
 
 import { AuthStrategies } from './strategies.js'
 
@@ -19,6 +19,8 @@ const hashPassword = (kdf: string, pwd: string): string => {
 }
 
 const registerAccount = (auth: AuthStrategies, req: any): void => {
+    if (auth === AuthStrategies.JWT) throw new Error('jwt authetication strategy not valid')
+
     // fetch database account
     const dbAccount: Account | undefined = registeredAccount(auth, req)
 
@@ -31,51 +33,59 @@ const registerAccount = (auth: AuthStrategies, req: any): void => {
     }
 
     // account requested to register
-    let reqAccount: Account = {
+    const account: Account = {
         id: randomUUID(),
+        account: '',
         username: '',
         firstName: '',
         lastName: '',
         email: '',
         emailVerified: false,
-        companyName: undefined,
-        companyId: undefined,
-        employeeId: undefined,
-        workplace: undefined,
-        role: undefined,
-        vcExpTimestamp: undefined,
-        password: undefined,
     }
 
     if (auth === AuthStrategies.OAUTH) {
-        reqAccount.username = req.login
-        reqAccount.email = req.login
-        reqAccount.role = 'user'
+        account.account = req.login
+        account.username = req.login
+        account.email = req.login
+        account.employeeRole = 'user'
     }
 
     if (auth === AuthStrategies.OIDC) {
-        reqAccount.username = req.user.email
-        reqAccount.firstName = req.user.given_name
-        reqAccount.lastName = req.user.family_name
-        reqAccount.email = req.user.email
-        reqAccount.emailVerified = req.user.email_verified
-        reqAccount.role = 'user'
+        account.account = req.user.email
+        account.username = req.user.email
+        account.firstName = req.user.given_name
+        account.lastName = req.user.family_name
+        account.email = req.user.email
+        account.emailVerified = req.user.email_verified
+        account.employeeRole = 'user'
     }
 
     if (auth === AuthStrategies.PWD) {
-        reqAccount.username = req.body.username
-        reqAccount.email = req.body.email
-        reqAccount.password = hashPassword(req.body.kdf, req.body.password)
+        account.account = req.body.username
+        account.username = req.body.username
+        account.email = req.body.email
+        account.password = hashPassword(req.body.kdf, req.body.password)
     }
 
-    if (auth === AuthStrategies.VC) reqAccount = req.user
+    if (auth === AuthStrategies.RADIUS) {
+        account.account = req.user.username
+        account.username = req.user.username
+        account.email = req.user.username
+        account.emailVerified = true
+        account.employeeRole = 'user'
+    }
+
+    // TODO
+    if (auth === AuthStrategies.VC) {
+        account.email = req.email
+    }
 
     // TODO: LOG REGISTRATION REQUEST
 
     // ensure account key exists
-    if (reqAccount.username === '') throw new Error('undefined account username')
+    if (account.account === '') throw new Error('undefined account key')
 
-    updateAccount(reqAccount)
+    updateAccountsDb(account)
 }
 
 export default registerAccount

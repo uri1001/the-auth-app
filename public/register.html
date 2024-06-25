@@ -49,10 +49,20 @@
         <p>Verifiable Credential Issuance</p>
         <form action="/vc/register" method="post">
             <div>
+                <label>Username:</label>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="walrus"
+                    pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
+                    required
+                />
+            </div>
+            <div>
                 <label>First Name:</label>
                 <input
                     type="text"
-                    name="first-name"
+                    name="first_name"
                     placeholder="Walrus"
                     pattern="^[A-Za-z][A-Za-z]{1,}$"
                     required
@@ -62,19 +72,9 @@
                 <label>Last Name:</label>
                 <input
                     type="text"
-                    name="last-name"
+                    name="last_name"
                     placeholder="Wild"
                     pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
-            </div>
-            <div>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="walrus"
-                    pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
                     required
                 />
             </div>
@@ -89,38 +89,24 @@
                 />
             </div>
             <div>
-                <label>Company Name:</label>
-                <input
-                    type="text"
-                    name="company-name"
-                    placeholder="Walrus Inc."
-                    pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
+                <label>Company Identifier:</label>
+                <input type="text" name="company_id" placeholder="010101" required />
             </div>
             <div>
-                <label>Company Identifier:</label>
-                <input type="text" name="company-id" placeholder="010101" required />
+                <label>Company Name:</label>
+                <input type="text" name="company_name" placeholder="Walrus Inc." required />
             </div>
             <div>
                 <label>Company Workplace:</label>
-                <input
-                    type="text"
-                    name="company-workplace"
-                    placeholder="Cybersecurity"
-                    pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
+                <input type="text" name="company_workplace" placeholder="Cybersecurity" required />
+            </div>
+            <div>
+                <label>Employee Identifier:</label>
+                <input type="text" name="employee_id" placeholder="101010" required />
             </div>
             <div>
                 <label>Role:</label>
-                <input
-                    type="text"
-                    name="role"
-                    placeholder="Blockchain Engineer"
-                    pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
+                <input type="text" name="employee_role" placeholder="Blockchain Engineer" required />
             </div>
             <div>
                 <input type="submit" value="Issue Credential" />

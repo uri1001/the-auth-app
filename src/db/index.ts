@@ -1,6 +1,7 @@
 export { default as db } from './db.js'
 
-export { default as getAccount } from './utils/get.js'
-export { default as updateAccount } from './utils/update.js'
+export { fetchAccountsDb } from './utils/fetch.js'
+export { updateAccountsDb } from './utils/update.js'
 
 export type { default as Account } from './models/account.js'
+export type { default as Network } from './models/network.js'

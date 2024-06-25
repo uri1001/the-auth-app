@@ -12,7 +12,6 @@ router.get('/login', passport.authenticate('oidc', { scope: 'openid email profil
 router.get(
     '/cb',
     passport.authenticate('oidc', { failureRedirect: '/error', failureMessage: true }),
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     (req: Request, res: Response): void => {
         if (req.user == null) throw new Error('request user undefined')
 

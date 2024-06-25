@@ -1,22 +1,17 @@
+import { type JwtPayload } from 'jsonwebtoken'
 import { Strategy as JwtStrategy, type VerifiedCallback } from 'passport-jwt'
 
-import dotenv from 'dotenv'
-
-import { type JwtPayload } from 'jsonwebtoken'
-
+import { fetchAccountsDb, type Account } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
-import { getAccount, type Account } from '../../db/index.js'
-
+import { getEnv } from '../../system.js'
 import { logAuthentication } from '../log.js'
-
-dotenv.config()
 
 const cookieExtractor = (req: any): any =>
     Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
 
 const opts = {
-    secretOrKey: process.env.JWT_PRIVATE_KEY,
+    secretOrKey: getEnv('JWT_PRIVATE_KEY'),
     jwtFromRequest: cookieExtractor,
 }
 
@@ -24,7 +19,7 @@ const verifyAccount = (jwtPayload: JwtPayload, done: VerifiedCallback): void => 
     try {
         if (jwtPayload.sub == null) throw new Error('undefined jwt subject')
 
-        const account: Account | undefined = getAccount(jwtPayload.sub)
+        const account: Account | undefined = fetchAccountsDb(jwtPayload.sub)
 
         logAuthentication(AuthStrategies.JWT, jwtPayload, account)
 

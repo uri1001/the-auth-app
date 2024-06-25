@@ -1,10 +1,8 @@
+import bcrypt from 'bcrypt'
 import { Strategy as LocalStrategy } from 'passport-local'
 
-import bcrypt from 'bcrypt'
-
+import { fetchAccountsDb, type Account } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
-
-import { getAccount, type Account } from '../../db/index.js'
 
 import { logAuthentication } from '../log.js'
 
@@ -16,7 +14,7 @@ const opts = {
 
 const verifyAccount = (username: string, password: string, done: any): void => {
     try {
-        const account: Account | undefined = getAccount(username)
+        const account: Account | undefined = fetchAccountsDb(username)
 
         logAuthentication(AuthStrategies.PWD, { username, password }, account)
 
@@ -25,10 +23,10 @@ const verifyAccount = (username: string, password: string, done: any): void => {
 
         if (bcrypt.compareSync(password, account.password)) return done(null, { username })
 
-        return done(null, false)
+        done(null, false)
     } catch (error) {
         console.log(error)
-        return done(null, false)
+        done(null, false)
     }
 }
 

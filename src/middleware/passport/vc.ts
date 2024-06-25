@@ -1,11 +1,9 @@
+import { type Request } from 'express'
 import jwt from 'jsonwebtoken'
 import { Strategy as CustomStrategy, type VerifiedCallback } from 'passport-custom'
 
-import { type Request } from 'express'
-
+import { fetchAccountsDb, type Account } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
-
-import { getAccount, type Account } from '../../db/index.js'
 
 import { getEnv } from '../../system.js'
 import { logAuthentication } from '../log.js'
@@ -44,13 +42,11 @@ const verifyAccount = (req: Request, done: VerifiedCallback): void => {
             email: extractValueJwt(jwtPayload, '/credentialSubject/email'),
         }
 
-        const account: Account | undefined = getAccount(payload.email)
+        const account: Account | undefined = fetchAccountsDb(payload.email)
 
         logAuthentication(AuthStrategies.VC, jwtPayload, account)
 
-        const user = account == null ? payload : account
-
-        done(null, user)
+        done(null, payload)
     } catch (error) {
         console.error(error)
         done(null, false)

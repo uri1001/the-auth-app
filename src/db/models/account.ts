@@ -1,15 +1,16 @@
 interface Account {
-    id: `${string}-${string}-${string}-${string}-${string}`
-    username: string
+    id: `${string}-${string}-${string}-${string}-${string}` // pk
+    account: string // pk
+    username: string // unique
     firstName: string
     lastName: string
-    email: string
+    email: string // unique
     emailVerified: boolean
-    companyName: 'i2cat' | undefined
-    companyId: string | undefined
-    employeeId: string | undefined
-    workplace: 'cybersecurity' | 'iot' | 'ai' | 'guest' | undefined
-    role:
+    companyId?: string
+    companyName?: 'i2cat' | 'pied piper'
+    companyWorkplace?: 'cybersecurity' | 'iot' | 'ai' | 'guest'
+    employeeId?: string
+    employeeRole?:
         | 'user'
         | 'admin'
         | 'business'
@@ -17,9 +18,7 @@ interface Account {
         | 'manager'
         | 'operations'
         | 'technical'
-        | undefined
-    vcExpTimestamp: number | undefined
-    password: string | undefined
+    password?: string
 }
 
 export default Account

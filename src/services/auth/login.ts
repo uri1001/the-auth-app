@@ -22,13 +22,11 @@ const issueJwt = (auth: AuthStrategies, account: Account, res: Response): void =
         email: account.email,
         email_verified: account.emailVerified,
         // company
-        company_name: account.companyName,
         company_id: account.companyId,
+        company_name: account.companyName,
+        company_workplace: account.companyWorkplace,
         employee_id: account.employeeId,
-        workplace: account.workplace,
-        role: account.role,
-        // verifiable credential
-        expiration_time: account.vcExpTimestamp,
+        employee_role: account.employeeRole,
         // json web token
         iss: auth,
         aud: 'localhost',
