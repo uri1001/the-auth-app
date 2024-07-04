@@ -1,6 +1,6 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 
-import { fetchAccountsDb, type Account } from '../../db/index.js'
+import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
 import { getEnv } from '../../system.js'
@@ -42,9 +42,9 @@ const radiusStrategy = new LocalStrategy(
                 ],
             })
 
-            const account: Account | undefined = fetchAccountsDb(username)
+            const user = fetchDb('users', 'user', username)
 
-            logAuthentication(AuthStrategies.OIDC, { username, password, res }, account)
+            logAuthentication(AuthStrategies.OIDC, { username, password, res }, user)
 
             done(null, { username })
         } catch (error) {

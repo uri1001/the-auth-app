@@ -22,6 +22,7 @@ export const reqIssueDataVc = async (info: any): Promise<any> => {
         companyWorkplace: info.company_workplace,
         employeeId: info.employee_id,
         employeeRole: info.employee_role,
+        expirationTimestamp: 0,
     }
 
     const res = await axios.post(url, data, {

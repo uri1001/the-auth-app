@@ -1,7 +1,7 @@
 import { type JwtPayload } from 'jsonwebtoken'
 import { Issuer, Strategy as OpenIDConnectStrategy } from 'openid-client'
 
-import { fetchAccountsDb, type Account } from '../../db/index.js'
+import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
 import { getEnv } from '../../system.js'
@@ -28,9 +28,9 @@ const oidcStrategyInit = async (): Promise<OpenIDConnectStrategy<any, any>> => {
             if (tokenSet === undefined) return done('no token set provided')
             if (userInfo == null) return done('no user info provided')
 
-            const account: Account | undefined = fetchAccountsDb(userInfo.email)
+            const user = fetchDb('users', 'user', userInfo.email)
 
-            logAuthentication(AuthStrategies.OIDC, { tokenSet, userInfo }, account)
+            logAuthentication(AuthStrategies.OIDC, { tokenSet, userInfo }, user)
 
             done(null, userInfo)
         },

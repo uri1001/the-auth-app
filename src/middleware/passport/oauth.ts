@@ -2,14 +2,13 @@ import { type Request } from 'express'
 import { Strategy as CustomStrategy, type VerifiedCallback } from 'passport-custom'
 
 import { reqTokenOauth, reqUserDataOauth } from '../../adapters/index.js'
+import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
-
-import { fetchAccountsDb, type Account } from '../../db/index.js'
 
 import { getEnv } from '../../system.js'
 import { logAuthentication } from '../log.js'
 
-const verifyAccount = async (req: Request, done: VerifiedCallback): Promise<void> => {
+const verifyUser = async (req: Request, done: VerifiedCallback): Promise<void> => {
     try {
         if (req.query.code == null) throw new Error('no request code provided')
 
@@ -31,9 +30,9 @@ const verifyAccount = async (req: Request, done: VerifiedCallback): Promise<void
         // request user data to oauth provider
         const userData = await reqUserDataOauth(getEnv('OAUTH2_USER_API'), accessToken)
 
-        const account: Account | undefined = fetchAccountsDb(userData.login)
+        const user = fetchDb('users', 'user', userData.login)
 
-        logAuthentication(AuthStrategies.VC, userData, account)
+        logAuthentication(AuthStrategies.VC, userData, user)
 
         done(null, userData)
     } catch (error) {
@@ -43,6 +42,6 @@ const verifyAccount = async (req: Request, done: VerifiedCallback): Promise<void
 }
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-const vcStrategy = new CustomStrategy(verifyAccount)
+const vcStrategy = new CustomStrategy(verifyUser)
 
 export default vcStrategy

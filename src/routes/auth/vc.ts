@@ -1,10 +1,12 @@
 import express, { type Request, type Response } from 'express'
+import fs from 'fs'
 import passport from 'passport'
+import path from 'path'
 
 import { reqIssueDataVc } from '../../adapters/index.js'
-import { AuthStrategies, loginAccount, registerAccount } from '../../services/index.js'
+import { AuthStrategies, loginUser, registerUser } from '../../services/index.js'
 
-import { getEnv } from '../../system.js'
+import { getEnv, root } from '../../system.js'
 
 const router = express.Router()
 
@@ -20,11 +22,11 @@ router.get(
     (req: Request, res: Response): void => {
         if (req.user == null) throw new Error('request user undefined')
 
-        // register successful authentication - account could be registered
-        registerAccount(AuthStrategies.VC, req)
+        // register successful authentication - user could be registered
+        registerUser(AuthStrategies.VC, req)
 
         // login successful authentication
-        loginAccount(AuthStrategies.VC, req, res)
+        loginUser(AuthStrategies.VC, req, res)
 
         res.redirect('/')
     },
@@ -36,11 +38,14 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     // request vc issue data
     const base64Data: string = await reqIssueDataVc(req.body)
 
-    // decode base64 format into binary format
-    const binaryData = Buffer.from(base64Data, 'base64')
+    // load the HTML template
+    const template = fs.readFileSync(path.join(root, 'qr.html'), 'utf-8')
 
-    // present data - png file with qr code
-    res.set('Content-Type', 'image/png').send(binaryData)
+    // replace the placeholder with the base64 data
+    const html = template.replace('{{qrImage}}', base64Data)
+
+    // send the HTML content
+    res.set('Content-Type', 'text/html').send(html)
 })
 
 export default router

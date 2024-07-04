@@ -17,17 +17,17 @@ import {
 } from './middleware/index.js'
 
 import {
-    dataRouter,
+    dbRouter,
     errorRouter,
     landingRouter,
     loginRouter,
     logoutRouter,
     oauthRouter,
     oidcRouter,
-    profileRouter,
     pwdRouter,
     radiusRouter,
     registerRouter,
+    userRouter,
     vcRouter,
 } from './routes/index.js'
 
@@ -86,8 +86,8 @@ const server = async (): Promise<void> => {
     app.use('/radius', radiusRouter)
     app.use('/vc', vcRouter)
 
-    app.use('/data', dataRouter)
-    app.use('/profile', profileRouter)
+    app.use('/user', userRouter)
+    app.use('/db', dbRouter)
 
     app.use('/error', errorRouter)
 

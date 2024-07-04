@@ -1,4 +1,2 @@
-export { default as loginAccount } from './auth/login.js'
-export { default as registerAccount } from './auth/register.js'
-
-export { AuthStrategies } from './auth/strategies.js'
+export { AuthStrategies, loginUser, registerUser } from './auth.js'
+export { queryDb } from './db.js'

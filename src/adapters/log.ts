@@ -1,8 +1,6 @@
 export const logRequest = (auth: boolean, url: string, reqData: any, resData: any): void => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`\nRequest URL - ${url} - Authenticated - ${auth}`)
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`   Request Data - ${reqData}`)
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`   Response Data - ${resData}\n`)
+    console.log(`\n--- External API Request ---\n`)
+    console.log(`   Request URL - ${url} - Authenticated - ${String(auth)}`)
+    console.log('   Request Data - ', reqData)
+    console.log('   Response Data - ', resData, `\n`)
 }

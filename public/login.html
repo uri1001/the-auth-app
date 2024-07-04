@@ -7,9 +7,10 @@
 
     <body>
         <p><strong>Please Log In to Proceed</strong></p>
+
         <div>
-            <button onclick="usr_pwd_form.showModal()">Log In with Username - Password</button>
-            <dialog id="usr_pwd_form">
+            <button onclick="pwdForm.showModal()">Log In with Username - Password</button>
+            <dialog id="pwdForm">
                 <form action="/pwd/login" method="post">
                     <div>
                         <label>Username:</label>
@@ -29,12 +30,14 @@
                         <input type="submit" value="Log In with Username - Password" />
                     </div>
                     <div>
-                        <button onclick="usr_pwd_form.close()">Close Panel</button>
+                        <button onclick="pwdForm.close()">Close Panel</button>
                     </div>
                 </form>
             </dialog>
         </div>
+
         <br />
+
         <div>
             <button>
                 <a
@@ -43,13 +46,17 @@
                 >
             </button>
         </div>
+
         <br />
+
         <div>
             <button>
                 <a href="/oidc/login">Log In with Google</a>
             </button>
         </div>
+
         <br />
+
         <div>
             <button>
                 <a href="/vc/login">Log In with Credential</a>

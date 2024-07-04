@@ -1,0 +1,152 @@
+{
+    "contracts": [
+        {
+            "contract": "werc20",
+            "name": "Standard Wrapped ERC20",
+            "type": "erc20",
+            "instances": {
+                "wbtc.arb": {
+                    "instance": "wbtc.arb",
+                    "network": "arbitrumOne",
+                    "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+                    "implAddress": "0x3f770Ac673856F105b586bb393d122721265aD46",
+                    "deployBlock": 2591,
+                    "deployTxHash": "0x8ebe1945f039f865af8b3079df3819534340ee41a5e6b8bfefb9c36a857778c9",
+                    "erc20": {
+                        "symbol": "WBTC",
+                        "uSymbol": "uWBTC",
+                        "decimals": 8
+                    }
+                }
+            },
+            "sourceCode": "https://arbiscan.io/address/0x3f770Ac673856F105b586bb393d122721265aD46#code",
+            "abi": "werc20.json",
+            "abiSha256": "0c8f93846544dc9df779c83ed6886801b86b7f477fcbd2a0c33cc89bcdc10f7a"
+        },
+        {
+            "contract": "weth",
+            "name": "Wrapped Ether",
+            "type": "erc20",
+            "instances": {
+                "arb": {
+                    "instance": "arb",
+                    "network": "arbitrumOne",
+                    "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+                    "implAddress": "0x8b194bEae1d3e0788A1a35173978001ACDFba668",
+                    "deployBlock": 55,
+                    "deployTxHash": "0x1555f3be9c09cf5bf802109366853cfda812e7a177e755aeb8d9566c5728747e",
+                    "erc20": {
+                        "symbol": "WETH",
+                        "uSymbol": "uWETH",
+                        "decimals": 18
+                    }
+                }
+            },
+            "sourceCode": "https://arbiscan.io/address/0x8b194bEae1d3e0788A1a35173978001ACDFba668#code",
+            "abi": "weth.json",
+            "abiSha256": "e73ea88352cc463141fc368ff5ae8e8d44f831f86e823859b93053ad6bf5f9c7"
+        },
+        {
+            "contract": "usdc",
+            "name": "USD Coin",
+            "type": "erc20",
+            "instances": {
+                "arb": {
+                    "instance": "arb",
+                    "network": "arbitrumOne",
+                    "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+                    "implAddress": "0x86E721b43d4ECFa71119Dd38c0f938A75Fdb57B3",
+                    "deployBlock": 34266938,
+                    "deployTxHash": "0xec773df8d80c83b23c74d0368f63d095f040c5fc6f9e749d0b429a7410c62662",
+                    "erc20": {
+                        "symbol": "USDC",
+                        "uSymbol": "uUSDC",
+                        "decimals": 6
+                    }
+                }
+            },
+            "sourceCode": "https://arbiscan.io/address/0x86E721b43d4ECFa71119Dd38c0f938A75Fdb57B3#code",
+            "abi": "usdc.json",
+            "abiSha256": "773956378f8eb4aaa19a2f2e66c2d84c8e7fec516e519b7369eea0e443118684"
+        },
+        {
+            "contract": "olink",
+            "name": "Chainlink ERC20 Price Feed Oracle",
+            "type": "oracle",
+            "instances": {
+                "wbtc.arb": {
+                    "instance": "wbtc.arb",
+                    "network": "arbitrumOne",
+                    "address": "0x6ce185860a4963106506C203335A2910413708e9",
+                    "implAddress": "0x6ce185860a4963106506C203335A2910413708e9",
+                    "deployBlock": 101519,
+                    "deployTxHash": "0xad5a7487ae0c93422aeca73ae7f647f3d2ae3ce853b3839df31bfd4260b41872",
+                    "oracle": {
+                        "werc20": "wbtc.arb"
+                    }
+                },
+                "weth.arb": {
+                    "instance": "weth.arb",
+                    "network": "arbitrumOne",
+                    "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
+                    "implAddress": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
+                    "deployBlock": 101490,
+                    "deployTxHash": "0x696c90687c36860e9cb15dc9a6904d52463d5effdc2692d0107a024da62a424b",
+                    "oracle": {
+                        "weth": "arb"
+                    }
+                },
+                "usdc.arb": {
+                    "instance": "usdc.arb",
+                    "network": "arbitrumOne",
+                    "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
+                    "implAddress": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
+                    "deployBlock": 101256,
+                    "deployTxHash": "0x55aadc3253ac28ae88b1a00c22c357fab6c22f0bf7a74e48530ce70f764ac501",
+                    "oracle": {
+                        "usdc": "arb"
+                    }
+                }
+            },
+            "sourceCode": "https://arbiscan.io/address/0xcc3370bde6afe51e1205a5038947b9836371eccb#code",
+            "abi": "olink.json",
+            "abiSha256": "08ef334d7d4d1eb3eb55d79c61d11de45820d94ba312ceed78a1d1f85cd1dbf0"
+        },
+        {
+            "contract": "gnosisSafe",
+            "name": "Gnosis Multi-Signature Wallet",
+            "type": "multisig",
+            "instances": {
+                "index.eth": {
+                    "instance": "index.eth",
+                    "network": "mainnet",
+                    "address": "0x9467cfADC9DE245010dF95Ec6a585A506A8ad5FC",
+                    "implAddress": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+                    "deployBlock": 10991433,
+                    "deployTxHash": "0xd5e8a5435f899ec593ebeb582249024fb02fabecbf3745f12bcd4e4c068118b1"
+                }
+            },
+            "sourceCode": "https://github.com/safe-global/safe-smart-account",
+            "abi": "gsafe.json",
+            "abiSha256": "a04f77f1092cdb31a4ba9e3045ebd8533253ee9707ec69d87b21f0f1578d2bc0"
+        },
+        {
+            "contract": "indexToken",
+            "name": "Index Coop Governance Token",
+            "type": "erc20",
+            "instances": {
+                "eth": {
+                    "instance": "eth",
+                    "network": "mainnet",
+                    "address": "0x0954906da0Bf32d5479e25f46056d22f08464cab",
+                    "implAddress": "0x0954906da0Bf32d5479e25f46056d22f08464cab",
+                    "deployBlock": 11000455,
+                    "deployTxHash": "0x7d1f84b357744377288299d122d91020fed375fbd7548400722abeb56413027c"
+                }
+            },
+            "sourceCode": "https://github.com/IndexCoop/index-coop-smart-contracts/blob/master/contracts/token/IndexToken.sol",
+            "abi": "itoken.json",
+            "abiSha256": "04fe88eed67db84daa7b55c2f492dc0525a2e8e81af11a6d40dd2c70606884ce"
+        }
+    ]
+}

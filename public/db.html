@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Database</title>
+
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+
+        <script>
+            window.onload = function () {
+                toggleDbField()
+            }
+
+            function toggleActionField() {
+                const selectedAction = document.getElementById('action').value
+
+                if (selectedAction === 'fetch' || selectedAction === 'delete') {
+                    document.getElementById('element-key-input').classList.remove('hidden')
+                    document.getElementById('element-input').classList.add('hidden')
+                } else if (selectedAction === 'insert' || selectedAction === 'update') {
+                    document.getElementById('element-key-input').classList.add('hidden')
+                    document.getElementById('element-input').classList.remove('hidden')
+                } else {
+                    document.getElementById('element-key-input').classList.add('hidden')
+                    document.getElementById('element-input').classList.add('hidden')
+                }
+            }
+
+            function toggleDbField() {
+                const selectedDb = document.getElementById('db').value
+
+                const models = [
+                    'db-accounts',
+                    'db-contracts',
+                    'db-networks',
+                    'db-wallets',
+                    'db-users',
+                ]
+
+                document.getElementById(
+                    'database-model',
+                ).textContent = `Database Model - ${selectedDb}`
+
+                for (let i = 0; i < models.length; i++) {
+                    if (`db-${selectedDb}` === models[i]) {
+                        document.getElementById(models[i]).classList.remove('hidden')
+                    } else {
+                        document.getElementById(models[i]).classList.add('hidden')
+                    }
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <h3>Database Query Panel</h3>
+        <div>
+            <p><strong>Query Form</strong></p>
+            <form action="/db" method="post">
+                <div>
+                    <label>Query Action:</label>
+                    <select name="action" id="action" onchange="toggleActionField()">
+                        <option value="fetch" selected>Fetch</option>
+                        <option value="insert">Insert</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <br />
+                    <label>Target Database:</label>
+                    <select name="db" id="db" onchange="toggleDbField()">
+                        <option value="accounts" selected>Accounts</option>
+                        <option value="contracts">Contracts</option>
+                        <option value="networks">Networks</option>
+                        <option value="wallets">Wallets</option>
+                        <option value="users">Users</option>
+                    </select>
+                </div>
+
+                <br />
+
+                <div id="element-key-input">
+                    <label>Element Parameter:</label>
+                    <input type="text" name="parameter" placeholder="account" />
+                    <br />
+                    <label>Key Parameter:</label>
+                    <input type="text" name="key" placeholder="chainlink" />
+                    <br />
+                    <p>Fetch/Delete All DB - Element or Key Parameter Field Empty</p>
+                </div>
+
+                <div id="element-input" class="hidden">
+                    <label>Database Element:</label>
+                    <textarea id="element" name="element" rows="10" cols="50"></textarea>
+                </div>
+
+                <div>
+                    <input type="submit" value="Execute Query" />
+                </div>
+            </form>
+        </div>
+
+        <br />
+
+        <button onclick="dbModel.showModal()">View Database Model</button>
+        <dialog id="dbModel">
+            <p><strong id="database-model"></strong></p>
+
+            <div id="db-accounts">{{account-model}}</div>
+            <div id="db-contracts" class="hidden">{{contract-model}}</div>
+            <div id="db-networks" class="hidden">{{network-model}}</div>
+            <div id="db-wallets" class="hidden">{{wallet-model}}</div>
+            <div id="db-users" class="hidden">{{user-model}}</div>
+            <br />
+            <div>
+                <button onclick="dbModel.close()">Close Panel</button>
+            </div>
+        </dialog>
+
+        <br />
+        <br />
+        <hr />
+
+        <p><strong>Query Result</strong></p>
+        <br />
+        <div id="data">{{response-data}}</div>
+        <br />
+    </body>
+</html>

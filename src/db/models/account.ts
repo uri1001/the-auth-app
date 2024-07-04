@@ -1,24 +1,25 @@
 interface Account {
-    id: `${string}-${string}-${string}-${string}-${string}` // pk
     account: string // pk
-    username: string // unique
-    firstName: string
-    lastName: string
-    email: string // unique
-    emailVerified: boolean
-    companyId?: string
-    companyName?: 'i2cat' | 'pied piper'
-    companyWorkplace?: 'cybersecurity' | 'iot' | 'ai' | 'guest'
-    employeeId?: string
-    employeeRole?:
-        | 'user'
-        | 'admin'
-        | 'business'
-        | 'research'
-        | 'manager'
-        | 'operations'
-        | 'technical'
-    password?: string
+    name: string
+    url: string
+    contracts?: string[] // contract-instances[] - fk - pk contract - pk instance
+    rpc?: {
+        privacyLevel: 'privacy' | 'partial privacy' | 'no privacy' | 'no info' | 'null'
+        privacyPolicy: readonly string[]
+    }
+}
+
+export const accountModel: Account = {
+    account: 'account key [ string ] - pk',
+    name: 'account name [ string ]',
+    url: 'account info url [ string ]',
+    contracts: ['account contract instance [string] - contract pk - instance pk'],
+    rpc: {
+        // @ts-expect-error invalid type
+        privacyLevel:
+            'rpc provider privacy level [ privacy | partial privacy | no privacy | no info | null ]',
+        privacyPolicy: ['rpc provider privacy policy statement url [ string ]'],
+    },
 }
 
 export default Account

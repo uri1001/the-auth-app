@@ -142,6 +142,17 @@ Package manager installation (npm)
     PORT = 'server-listen-port-number'
     ```
 
+Database Encryption Keys
+
+-   Generate 256-bit Key (32 Bytes)
+    ```sh
+    openssl rand -base64 32
+    ```
+-   Generate 128-bit IV (16 Bytes)
+    ```sh
+    openssl rand -base64 16
+    ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- PROJECT USAGE -->

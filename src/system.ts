@@ -9,6 +9,8 @@ type Env =
     | 'JWT_SESSION_LENGTH_SECONDS'
     | 'JWT_PUBLIC_KEY'
     | 'JWT_PRIVATE_KEY'
+    | 'DB_KEY'
+    | 'DB_IV'
     | 'RADIUS_SERVER_SECRET'
     | 'OAUTH2_CLIENT_ID'
     | 'OAUTH2_CLIENT_SECRET'

@@ -2,7 +2,7 @@ import express, { type Request, type Response } from 'express'
 
 import passport from 'passport'
 
-import { AuthStrategies, loginAccount, registerAccount } from '../../services/index.js'
+import { AuthStrategies, loginUser, registerUser } from '../../services/index.js'
 
 const router = express.Router()
 
@@ -14,7 +14,7 @@ router.post(
         if (req.user == null) throw new Error('request user undefined')
 
         // login successful authentication
-        loginAccount(AuthStrategies.PWD, req, res)
+        loginUser(AuthStrategies.PWD, req, res)
 
         res.redirect('/')
     },
@@ -24,8 +24,8 @@ router.post(
 router.post('/register', (req: Request, res: Response): void => {
     if (req.body == null) throw new Error('request body undefined')
 
-    // register account - ensures account not registered
-    registerAccount(AuthStrategies.PWD, req)
+    // register user - ensures user not registered
+    registerUser(AuthStrategies.PWD, req)
 
     res.redirect('/')
 })

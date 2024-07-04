@@ -11,5 +11,5 @@ export { default as pwdRouter } from './auth/pwd.js'
 export { default as radiusRouter } from './auth/radius.js'
 export { default as vcRouter } from './auth/vc.js'
 
-export { default as dataRouter } from './private/data.js'
-export { default as profileRouter } from './private/profile.js'
+export { default as dbRouter } from './private/db.js'
+export { default as userRouter } from './private/user.js'

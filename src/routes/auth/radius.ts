@@ -1,7 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 
-import { AuthStrategies, loginAccount, registerAccount } from '../../services/index.js'
+import { AuthStrategies, loginUser, registerUser } from '../../services/index.js'
 
 const router = express.Router()
 
@@ -11,11 +11,11 @@ router.post(
     (req, res) => {
         if (req.user === undefined) throw new Error('request user undefined')
 
-        // register successful authentication - account could be registered
-        registerAccount(AuthStrategies.RADIUS, req)
+        // register successful authentication - user could be registered
+        registerUser(AuthStrategies.RADIUS, req)
 
         // login successful authetication
-        loginAccount(AuthStrategies.RADIUS, req, res)
+        loginUser(AuthStrategies.RADIUS, req, res)
 
         res.redirect('/')
     },

@@ -1,7 +1,7 @@
 import { type JwtPayload } from 'jsonwebtoken'
 import { Strategy as JwtStrategy, type VerifiedCallback } from 'passport-jwt'
 
-import { fetchAccountsDb, type Account } from '../../db/index.js'
+import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
 import { getEnv } from '../../system.js'
@@ -15,15 +15,15 @@ const opts = {
     jwtFromRequest: cookieExtractor,
 }
 
-const verifyAccount = (jwtPayload: JwtPayload, done: VerifiedCallback): void => {
+const verifyUser = (jwtPayload: JwtPayload, done: VerifiedCallback): void => {
     try {
         if (jwtPayload.sub == null) throw new Error('undefined jwt subject')
 
-        const account: Account | undefined = fetchAccountsDb(jwtPayload.sub)
+        const user = fetchDb('users', 'user', jwtPayload.sub)
 
-        logAuthentication(AuthStrategies.JWT, jwtPayload, account)
+        logAuthentication(AuthStrategies.JWT, jwtPayload, user)
 
-        if (account == null) throw new Error('account not registered in database')
+        if (user == null) throw new Error('user not registered in database')
 
         done(null, jwtPayload)
     } catch (error) {
@@ -32,6 +32,6 @@ const verifyAccount = (jwtPayload: JwtPayload, done: VerifiedCallback): void => 
     }
 }
 
-const jwtStrategy = new JwtStrategy(opts, verifyAccount)
+const jwtStrategy = new JwtStrategy(opts, verifyUser)
 
 export default jwtStrategy

@@ -2,7 +2,7 @@ import { type Request } from 'express'
 import jwt from 'jsonwebtoken'
 import { Strategy as CustomStrategy, type VerifiedCallback } from 'passport-custom'
 
-import { fetchAccountsDb, type Account } from '../../db/index.js'
+import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
 import { getEnv } from '../../system.js'
@@ -31,7 +31,7 @@ const extractValueJwt = (jwtPayload: jwt.JwtPayload, pointer: string): string =>
     throw new Error('undefined jwt payload property')
 }
 
-const verifyAccount = (req: Request, done: VerifiedCallback): void => {
+const verifyUser = (req: Request, done: VerifiedCallback): void => {
     try {
         const token = req.query.token as string
         if (token == null) throw new Error('undefined jwt')
@@ -42,9 +42,9 @@ const verifyAccount = (req: Request, done: VerifiedCallback): void => {
             email: extractValueJwt(jwtPayload, '/credentialSubject/email'),
         }
 
-        const account: Account | undefined = fetchAccountsDb(payload.email)
+        const user = fetchDb('users', 'user', payload.email)
 
-        logAuthentication(AuthStrategies.VC, jwtPayload, account)
+        logAuthentication(AuthStrategies.VC, jwtPayload, user)
 
         done(null, payload)
     } catch (error) {
@@ -53,6 +53,6 @@ const verifyAccount = (req: Request, done: VerifiedCallback): void => {
     }
 }
 
-const vcStrategy = new CustomStrategy(verifyAccount)
+const vcStrategy = new CustomStrategy(verifyUser)
 
 export default vcStrategy

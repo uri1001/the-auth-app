@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { Strategy as LocalStrategy } from 'passport-local'
 
-import { fetchAccountsDb, type Account } from '../../db/index.js'
+import { fetchDb, type User } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
 import { logAuthentication } from '../log.js'
@@ -12,16 +12,20 @@ const opts = {
     session: false,
 }
 
-const verifyAccount = (username: string, password: string, done: any): void => {
+const verifyUser = (username: string, password: string, done: any): void => {
     try {
-        const account: Account | undefined = fetchAccountsDb(username)
+        const res = fetchDb('users', 'user', username)
 
-        logAuthentication(AuthStrategies.PWD, { username, password }, account)
+        if (res.length > 1) throw new Error('invalid database fetch query')
 
-        if (account == null) throw new Error('account not registered in database')
-        if (account.password == null) throw new Error('account does not have password')
+        const user = res[0] as User
 
-        if (bcrypt.compareSync(password, account.password)) return done(null, { username })
+        logAuthentication(AuthStrategies.PWD, { username, password }, user)
+
+        if (user == null) throw new Error('user not registered in database')
+        if (user.password == null) throw new Error('user does not have password')
+
+        if (bcrypt.compareSync(password, user.password)) return done(null, { username })
 
         done(null, false)
     } catch (error) {
@@ -30,6 +34,6 @@ const verifyAccount = (username: string, password: string, done: any): void => {
     }
 }
 
-export const pwdStrategy = new LocalStrategy(opts, verifyAccount)
+export const pwdStrategy = new LocalStrategy(opts, verifyUser)
 
 export default pwdStrategy
