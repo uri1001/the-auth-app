@@ -5,8 +5,8 @@ import { reqTokenOauth, reqUserDataOauth } from '../../adapters/index.js'
 import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
+import { logAuthentication } from '../../log.js'
 import { getEnv } from '../../system.js'
-import { logAuthentication } from '../log.js'
 
 const verifyUser = async (req: Request, done: VerifiedCallback): Promise<void> => {
     try {

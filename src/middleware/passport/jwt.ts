@@ -4,8 +4,8 @@ import { Strategy as JwtStrategy, type VerifiedCallback } from 'passport-jwt'
 import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
+import { logAuthentication } from '../../log.js'
 import { getEnv } from '../../system.js'
-import { logAuthentication } from '../log.js'
 
 const cookieExtractor = (req: any): any =>
     Boolean(req) && Boolean(req.cookies) ? req.cookies['auth-jwt'] : null
@@ -27,7 +27,7 @@ const verifyUser = (jwtPayload: JwtPayload, done: VerifiedCallback): void => {
 
         done(null, jwtPayload)
     } catch (error) {
-        console.log(error)
+        console.error(error)
         done(null, false)
     }
 }

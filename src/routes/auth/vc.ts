@@ -4,6 +4,7 @@ import passport from 'passport'
 import path from 'path'
 
 import { reqIssueDataVc } from '../../adapters/index.js'
+import { validate, vcSchema } from '../../middleware/index.js'
 import { AuthStrategies, loginUser, registerUser } from '../../services/index.js'
 
 import { getEnv, root } from '../../system.js'
@@ -34,7 +35,7 @@ router.get(
 
 // register
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.post('/register', async (req: Request, res: Response): Promise<void> => {
+router.post('/register', vcSchema, validate, async (req: Request, res: Response): Promise<void> => {
     // request vc issue data
     const base64Data: string = await reqIssueDataVc(req.body)
 

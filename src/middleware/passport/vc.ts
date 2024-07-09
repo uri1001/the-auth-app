@@ -5,8 +5,8 @@ import { Strategy as CustomStrategy, type VerifiedCallback } from 'passport-cust
 import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
+import { logAuthentication } from '../../log.js'
 import { getEnv } from '../../system.js'
-import { logAuthentication } from '../log.js'
 
 interface JwtStoredValue {
     pointer: string
@@ -39,7 +39,16 @@ const verifyUser = (req: Request, done: VerifiedCallback): void => {
         const jwtPayload = verifyJwt(token)
 
         const payload = {
+            user: extractValueJwt(jwtPayload, '/credentialSubject/username'),
+            username: extractValueJwt(jwtPayload, '/credentialSubject/username'),
+            firstName: extractValueJwt(jwtPayload, '/credentialSubject/firstName'),
+            lastName: extractValueJwt(jwtPayload, '/credentialSubject/lastName'),
             email: extractValueJwt(jwtPayload, '/credentialSubject/email'),
+            companyId: extractValueJwt(jwtPayload, '/credentialSubject/companyId'),
+            companyName: extractValueJwt(jwtPayload, '/credentialSubject/companyName'),
+            companyWorkplace: extractValueJwt(jwtPayload, '/credentialSubject/companyWorkplace'),
+            employeeId: extractValueJwt(jwtPayload, '/credentialSubject/employeeId'),
+            employeeRole: extractValueJwt(jwtPayload, '/credentialSubject/employeeRole'),
         }
 
         const user = fetchDb('users', 'user', payload.email)

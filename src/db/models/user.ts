@@ -1,5 +1,5 @@
 interface User {
-    id: `${string}-${string}-${string}-${string}-${string}` // ak
+    id: string // ak
     user: string // pk
     username: string // unique
     firstName: string
@@ -24,26 +24,75 @@ interface User {
 
 export const userModel: User = {
     // @ts-expect-error invalid type
-    id: 'user internal uuid [ string ] - ak',
-    user: 'user key [ string ] - pk',
-    username: 'user username [ string ] - uk',
-    firstName: 'user first name [ string ]',
-    lastName: 'user last name [ string ]',
-    email: 'user electronic mail address [ string ] - uk',
+    id: {
+        description: 'internal unique sha256 hash id - ak',
+        format: 'hex sha256 digest output of the user object - string',
+    },
     // @ts-expect-error invalid type
-    emailVerified: 'user electronic email verified flag [ boolean ]',
-    companyId: 'user company id [ string ]',
+    user: {
+        description: 'unique alphanumerical key - pk',
+        format: 'more than 0 characters & less than 21, & must start with a letter with no special characters - string',
+    },
     // @ts-expect-error invalid type
-    companyName: 'user company key [ i2CAT | pied piper ]',
+    username: {
+        description: 'unique alphanumerical username - uk',
+        format: 'more than 0 characters & less than 21 - string',
+    },
     // @ts-expect-error invalid type
-    companyWorkplace: 'user company official name [ cybersecurity | iot | ai | guest ]',
-    employeeId: 'user company employee id [ string ]',
+    firstName: {
+        description: 'alphabetic first name',
+        format: 'more than 0 characters & less than 41 - string',
+    },
     // @ts-expect-error invalid type
-    employeeRole:
-        'user company employee role [ user | admin | business | research | manager | operations | technical ]',
+    lastName: {
+        description: 'alphabetic last name',
+        format: 'more than 0 characters & less than 41 - string',
+    },
     // @ts-expect-error invalid type
-    vcExpirationTimestamp: 'user verifiable credential expiration timestamp in seconds [ number ]',
-    password: 'user authentication hashed password - [ string ]',
+    email: {
+        description: 'electronic mail address - uk',
+        format: 'valid email address',
+    },
+    // @ts-expect-error invalid type
+    emailVerified: {
+        description: 'electronic email address verification flag',
+        format: 'boolean',
+    },
+    // @ts-expect-error invalid type
+    companyId: {
+        description: 'unique numerical company id',
+        format: 'more than 0 characters & less than 11 - string',
+    },
+    // @ts-expect-error invalid type
+    companyName: {
+        description: 'company unique alphanumerical key',
+        format: 'i2CAT | pied piper',
+    },
+    // @ts-expect-error invalid type
+    companyWorkplace: {
+        description: 'company official name',
+        format: 'cybersecurity | iot | ai | guest',
+    },
+    // @ts-expect-error invalid type
+    employeeId: {
+        description: 'unique numerical employee id',
+        format: 'more than 0 characters & less than 11 - string',
+    },
+    // @ts-expect-error invalid type
+    employeeRole: {
+        description: 'company employee role',
+        format: 'user | admin | business | research | manager | operations | technical',
+    },
+    // @ts-expect-error invalid type
+    vcExpirationTimestamp: {
+        description: 'verifiable credential expiration timestamp',
+        format: 'natural integer in seconds - number',
+    },
+    // @ts-expect-error invalid type
+    password: {
+        description: 'authentication hashed password',
+        format: 'hashed password - string',
+    },
 }
 
 export default User

@@ -1,13 +1,11 @@
 import bcrypt from 'bcrypt'
-import { randomUUID } from 'crypto'
 import { type Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { fetchDb, insertDb, type User } from '../db/index.js'
+import { fetchDb, insertDb, updateDb, type User } from '../db/index.js'
 
+import { logJwt, logRegistration } from '../log.js'
 import { getEnv } from '../system.js'
-
-import { logJwt } from './log.js'
 
 export enum AuthStrategies {
     JWT = 'local-jwt',
@@ -19,7 +17,7 @@ export enum AuthStrategies {
 }
 
 const hashPassword = (kdf: string, pwd: string): string => {
-    console.log(`\nPassword Hash`)
+    console.log(`\nPassword Hash - kdf: ${kdf}`)
     console.time('key-derivation-function')
     const rounds = kdf === 'slow' ? 16 : 10
     const salt = bcrypt.genSaltSync(rounds)
@@ -63,27 +61,27 @@ const issueJwt = (auth: AuthStrategies, user: User, res: Response): void => {
 
 // auth db validation
 const registeredUser = (auth: AuthStrategies, req: any): User | undefined => {
-    let userKey: string = ''
+    let pk: string = ''
 
     switch (auth) {
         case AuthStrategies.OAUTH:
-            userKey = req.login
+            pk = req.login
             break
         case AuthStrategies.OIDC:
-            userKey = req.user.email
+            pk = req.user.email
             break
         case AuthStrategies.PWD:
-            userKey = req.body.username
+            pk = req.body.username
             break
         case AuthStrategies.RADIUS:
-            userKey = req.user.username
+            pk = req.user.username
             break
         case AuthStrategies.VC:
-            userKey = req.user.email
+            pk = req.user.username
             break
     }
 
-    const user = fetchDb('users', 'user', userKey)
+    const user = fetchDb('users', 'user', pk)
 
     if (user.length > 1) throw new Error('invalid database fetch')
 
@@ -96,17 +94,13 @@ export const registerUser = (auth: AuthStrategies, req: any): void => {
     // fetch database user
     const dbUser: User | undefined = registeredUser(auth, req)
 
-    // validate user registration
-    if (!(dbUser == null)) {
-        // ensure user is not registered - username-password registration
-        if (auth === AuthStrategies.PWD) throw new Error('user already registered in database')
-        // finalize registration - user already registered
-        return
-    }
+    // ensure user is not registered - username-password registration
+    if (dbUser != null && auth === AuthStrategies.PWD)
+        throw new Error('user already registered in database')
 
     // user requested to register
     const user: User = {
-        id: randomUUID(),
+        id: '',
         user: '',
         username: '',
         firstName: '',
@@ -140,16 +134,26 @@ export const registerUser = (auth: AuthStrategies, req: any): void => {
         user.emailVerified = true
         user.employeeRole = 'user'
     } else if (auth === AuthStrategies.VC) {
-        // TODO
-        user.email = req.email
+        user.user = req.user.username
+        user.username = req.user.username
+        user.firstName = req.user.firstName
+        user.lastName = req.user.lastName
+        user.email = req.user.email
+        user.emailVerified = true
+        user.companyId = req.user.companyId
+        user.companyName = req.user.companyName
+        user.companyWorkplace = req.user.companyWorkplace
+        user.employeeId = req.user.employeeId
+        user.employeeRole = req.user.employeeRole
     }
 
-    // TODO: LOG REGISTRATION REQUEST
+    logRegistration(auth, user, dbUser)
 
     // ensure user key exists
     if (user.user === '') throw new Error('undefined user key')
 
-    insertDb('users', user)
+    if (dbUser == null) insertDb('users', user)
+    if (dbUser != null) updateDb('users', user)
 }
 
 export const loginUser = (auth: AuthStrategies, req: any, res?: Response): void => {

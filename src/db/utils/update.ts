@@ -1,20 +1,27 @@
-// import { type LowSync } from 'lowdb'
+import { type LowSync } from 'lowdb'
 
-import { type DBSchemas } from '../db.js'
+import { db, type DBSchemas } from '../db.js'
+import { type Account, type Contract, type Network, type User, type Wallet } from '../index.js'
 
+import { hash } from './crypto.js'
 import fetchDb from './fetch.js'
 
-const updateDb = (target: DBSchemas, data: any): void => {
-    // const schema: LowSync<any> = db[target]
+const updateDb = (target: DBSchemas, data: any): Account | Contract | Network | User | Wallet => {
+    const schema: LowSync<any> = db[target]
     // fetch database element
     const pk = target.replace(/s$/, '')
-    const element = fetchDb(target, pk, data[pk])
+    const res = fetchDb(target, pk, data[pk])
     // ensure database element exists
-    if (element == null) throw new Error('database element does not exist')
+    if (res.length === 0) throw new Error('database element does not exists')
     // update targeted database element
-    // schema.update(d => {
-    //     d = d.map((e: any) => (e[pk] === element[pk] ? data : e))
-    // })
+    const idx = schema.data[target].findIndex((e: any) => e[pk] === data[pk])
+    // generate element hash id
+    data.id = hash(JSON.stringify(data))
+    // update database
+    schema.data[target][idx] = data
+    schema.write()
+
+    return data
 }
 
 export default updateDb

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { logRequest } from '../log.js'
+import { logApiRequest } from '../../log.js'
 
 export const reqTokenOauth = async (
     url: string,
@@ -15,7 +15,7 @@ export const reqTokenOauth = async (
     }
 
     const res = await axios.post(url, data)
-    logRequest(true, url, data, res.data)
+    logApiRequest(true, url, data, res.data)
 
     return new URLSearchParams(res.data)
 }
@@ -26,7 +26,7 @@ export const reqUserDataOauth = async (url: string, accessToken: string): Promis
     }
 
     const res = await axios.get(url, { headers })
-    logRequest(true, url, undefined, res.data)
+    logApiRequest(true, url, undefined, res.data)
 
     return res.data
 }

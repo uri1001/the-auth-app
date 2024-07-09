@@ -4,8 +4,8 @@ import { Issuer, Strategy as OpenIDConnectStrategy } from 'openid-client'
 import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
+import { logAuthentication } from '../../log.js'
 import { getEnv } from '../../system.js'
-import { logAuthentication } from '../log.js'
 
 const oidcStrategyInit = async (): Promise<OpenIDConnectStrategy<any, any>> => {
     // download the issuer configuration from the well-known openid configuration (OIDC discovery)

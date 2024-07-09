@@ -17,6 +17,7 @@ interface BlockExplorer {
 }
 
 interface Network {
+    id: string
     network: string // pk
     networkId: number // ak
     name: string
@@ -43,73 +44,147 @@ interface Network {
 }
 
 export const networkModel: Network = {
-    network: 'network key [ string ] - pk',
     // @ts-expect-error invalid type
-    networkId: 'network id evm eip-155 [ number ] - ak',
-    name: 'network name [ string ]',
-    infoUrl: 'network information url [ string ]',
-    docsUrl: 'network documentation url [ string ]',
-    eipUrl: 'network link to official community evms list [ string ]',
+    id: {
+        description: 'internal unique sha256 hash id - ak',
+        format: 'hex sha256 digest output of the json object - string',
+    },
+    // @ts-expect-error invalid type
+    network: {
+        description: 'unique alphanumerical key - pk',
+        format: 'more than 0 characters & less than 21 - string',
+    },
+    // @ts-expect-error invalid type
+    networkId: {
+        description: 'id evm eip-155 - ak',
+        format: 'integer & positive number - number',
+    },
+    // @ts-expect-error invalid type
+    name: {
+        description: 'alphanumerical offical name',
+        format: 'more than 0 characters & less than 41 - string',
+    },
+    // @ts-expect-error invalid type
+    infoUrl: {
+        description: 'information url',
+        format: 'start with "https://" & have more than 9 characters - string',
+    },
+    // @ts-expect-error invalid type
+    docsUrl: {
+        description: 'documentation url',
+        format: 'start with "https://" & have more than 9 characters - string',
+    },
+    // @ts-expect-error invalid type
+    eipUrl: {
+        description: 'link to official community evms list',
+        format: 'https://github.com/ethereum-lists/chains/blob/master/_data/chains/eip155-<network-id>.json - string',
+    },
     nativeCurrency: {
-        name: 'native currency offical name [ string ]',
-        symbol: 'native currency symbol [ string ]',
-        uSymbol: 'native currency smallest unit symbol [ string ]',
         // @ts-expect-error invalid type
-        decimals: 'native currency decimals [ number ]',
+        name: {
+            description: 'network native currency name',
+            format: 'more than 0 characters & less than 21 - string',
+        },
+        // @ts-expect-error invalid type
+        symbol: {
+            description: 'network native currency symbol',
+            format: 'more than 0 characters & less than 5 & uppercase - string',
+        },
+        // @ts-expect-error invalid type
+        uSymbol: {
+            description: 'network native currency smallest unit symbol',
+            format: 'more than 0 characters & less than 7 - string',
+        },
+        // @ts-expect-error invalid type
+        decimals: {
+            description: 'native currency decimals',
+            format: 'natural integer - number',
+        },
     },
     rpcNodes: {
         rpcNode: {
-            rpcNode: 'network rpc node key [ string ] - uk',
             // @ts-expect-error invalid type
-            type: 'network rpc node endpoints specification type [ public | authenticated | local | null ]',
-            http: ['network rpc node http endpoint [ string ]'],
-            wss: ['network rpc node wss endpoint [ string ]'],
-            provider: 'network rpc node provider information [ string ] - fk - account',
-        },
-        public: {
-            rpcNode: 'network default rpc node key [ string ] - uk',
+            rpcNode: {
+                description: 'network rpc node unique alphanumerical key - uk',
+                format: 'more than 0 characters & less than 21 - string',
+            },
             // @ts-expect-error invalid type
-            type: 'network rpc node endpoints specification type [ public | authenticated | local | null ]',
-            http: ['network rpc node http endpoint [ string ]'],
-            wss: ['network rpc node wss endpoint [ string ]'],
-            provider: 'network rpc node provider information [ string ] - fk - account',
-        },
-        default: {
-            rpcNode: 'network public rpc node key [ string ] - uk',
+            type: {
+                description: 'network rpc node endpoints connection type',
+                format: 'public | authenticated | local | null',
+            },
+            http: {
+                // @ts-expect-error invalid type
+                description: 'network rpc node api http endpoint',
+                format: 'start with "http://" or "https://" & have more than 8 characters - string',
+            },
+            wss: {
+                // @ts-expect-error invalid type
+                description: 'network rpc node api wss endpoint',
+                format: 'start with "wss://" & have more than 8 characters - string',
+            },
             // @ts-expect-error invalid type
-            type: 'network rpc node endpoints specification type [ public | authenticated | local | null ]',
-            http: ['network rpc node http endpoint [ string ]'],
-            wss: ['network rpc node wss endpoint [ string ]'],
-            provider: 'network rpc node provider information [ string ] - fk - account',
+            provider: {
+                description: 'network rpc node provider information - fk [account]',
+                format: '<network-pk>',
+            },
         },
+        // @ts-expect-error invalid type
+        public: {},
+        // @ts-expect-error invalid type
+        default: {},
     },
     blockExplorers: {
         blockExplorer: {
-            blockExplorer: 'network block explorer key [ string ] - uk',
-            name: 'network block explorer official name [ string ]',
             // @ts-expect-error invalid type
-            type: 'network block explorer implementation type [ blockscout | etherscan | independent | subscan | null ]',
+            blockExplorer: {
+                description: 'network block explorer unique alphanumerical key - uk',
+                format: 'more than 0 characters & less than 21 - string',
+            },
             // @ts-expect-error invalid type
-            standard: 'network block explorer urls standard type [ eip3091 | none | null ]',
-            browserUrl: 'network block explorer browser base url [ string ]',
-            apiUrl: 'network block explorer api base url [ string ]',
-            docsUrl: 'network block explorer documentation url [ string ]',
+            name: {
+                description: 'network block explorer aphanumerical name',
+                format: 'more than 0 characters & less than 41 - string',
+            },
+            // @ts-expect-error invalid type
+            type: {
+                description: 'network block explorer api url endpoint schema type',
+                format: 'blockscout | etherscan | independent | subscan | null',
+            },
+            // @ts-expect-error invalid type
+            standard: {
+                description: 'network block explorer browser url endpoint standard schema type',
+                format: 'eip3091 | none | null',
+            },
+            // @ts-expect-error invalid type
+            browserUrl: {
+                description: 'network block explorer browser base url',
+                format: 'start with "https://" & have more than 9 characters - string',
+            },
+            // @ts-expect-error invalid type
+            apiUrl: {
+                description: 'network block explorer api base url',
+                format: 'start with "https://" & have more than 9 characters - string',
+            },
+            // @ts-expect-error invalid type
+            docsUrl: {
+                description: 'network block explorer documentation url',
+                format: 'start with "https://" & have more than 9 characters - string',
+            },
         },
-        default: {
-            blockExplorer: 'network default block explorer key [ string ] - uk',
-            name: 'network block explorer official name [ string ]',
-            // @ts-expect-error invalid type
-            type: 'network block explorer implementation type [ blockscout | etherscan | independent | subscan | null ]',
-            // @ts-expect-error invalid type
-            standard: 'network block explorer urls standard type [ eip3091 | none | null ]',
-            browserUrl: 'network block explorer browser base url [ string ]',
-            apiUrl: 'network block explorer api base url [ string ]',
-            docsUrl: 'network block explorer documentation url [ string ]',
-        },
+        // @ts-expect-error invalid type
+        default: {},
     },
-    baseLayer: 'network base layer (L0 or L1) [ string ] - fk - network',
     // @ts-expect-error invalid type
-    testnet: 'network testnet specification flag [ boolean ]',
+    baseLayer: {
+        description: 'network base layer (layer-0 or layer-1) - fk [network]',
+        format: '<network-pk>',
+    },
+    // @ts-expect-error invalid type
+    testnet: {
+        description: 'network testnet specification flag (true if network is a testnet)',
+        format: 'boolean',
+    },
 }
 
 export default Network

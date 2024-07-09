@@ -3,8 +3,8 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { fetchDb } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
+import { logAuthentication } from '../../log.js'
 import { getEnv } from '../../system.js'
-import { logAuthentication } from '../log.js'
 
 const loadClient = async (): Promise<any> => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,7 +48,7 @@ const radiusStrategy = new LocalStrategy(
 
             done(null, { username })
         } catch (error) {
-            console.log(error)
+            console.error(error)
             done(null, false)
         }
     },

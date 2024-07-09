@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { getEnv } from '../../system.js'
 
-import { logRequest } from '../log.js'
+import { logApiRequest } from '../../log.js'
 
 export const reqIssueDataVc = async (info: any): Promise<any> => {
     const url = getEnv('VC_PROVIDER_ISSUE_URL')
@@ -29,7 +29,7 @@ export const reqIssueDataVc = async (info: any): Promise<any> => {
         headers: { Authorization: authHeaders, 'Content-Type': 'application/json' },
     })
 
-    logRequest(true, url, data, res.data)
+    logApiRequest(true, url, data, res.data)
 
     return res.data
 }

@@ -104,5 +104,5 @@ const server = async (): Promise<void> => {
 }
 
 server().catch(error => {
-    console.log(error)
+    console.error(error)
 })

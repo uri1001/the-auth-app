@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { fetchDb, type User } from '../../db/index.js'
 import { AuthStrategies } from '../../services/index.js'
 
-import { logAuthentication } from '../log.js'
+import { logAuthentication } from '../../log.js'
 
 const opts = {
     usernameField: 'username',
@@ -29,7 +29,7 @@ const verifyUser = (username: string, password: string, done: any): void => {
 
         done(null, false)
     } catch (error) {
-        console.log(error)
+        console.error(error)
         done(null, false)
     }
 }

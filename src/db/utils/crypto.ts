@@ -5,6 +5,9 @@ import { getEnv } from '../../system.js'
 const key = Buffer.from(getEnv('DB_KEY'), 'base64') // AES-256 key
 const iv = Buffer.from(getEnv('DB_IV'), 'base64') // Initialization vector
 
+export const hash = (data: string): string =>
+    crypto.createHash('sha256').update(String(data)).digest('hex')
+
 export const decrypt = (data: string): string => {
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv)
     let decrypted = decipher.update(data, 'hex', 'utf8')

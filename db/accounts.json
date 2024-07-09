@@ -1,90 +1,113 @@
 {
-    "accounts": [
-        {
-            "account": "arbitrumFoundation",
-            "name": "Arbitrum Foundation",
-            "url": "https://arbitrum.foundation/",
-            "rpc": {
-                "privacyLevel": "no info",
-                "privacyPolicy": ["not found"]
-            }
-        },
-        {
-            "account": "indexCoop",
-            "name": "Index Coop Protocol",
-            "url": "https://indexcoop.com/",
-            "contracts": { "indexToken": "eth" },
-            "wallets": ["indexCoopTreasury"]
-        },
-        {
-            "account": "chainlink",
-            "name": "Chainlink Labs",
-            "url": "https://chain.link/",
-            "contracts": {
-                "olink": ["wbtc.arb", "weth.arb", "usdc.arb"]
-            }
-        },
-        {
-            "account": "circle",
-            "name": "Circle Internet Financial Limited",
-            "url": "https://www.circle.com/",
-            "contracts": {
-                "usdc": ["arb"]
-            }
-        },
-        {
-            "account": "wethCommunity",
-            "name": "Wrapped Ethereum Community",
-            "url": "https://weth.io/",
-            "contracts": {
-                "weth": ["arb"]
-            }
-        },
-        {
-            "account": "wbtc",
-            "name": "Wrapped Bitcoin Community",
-            "url": "https://wbtc.network/",
-            "contracts": {
-                "werc20": ["wbtc.arb"]
-            }
-        },
-        {
-            "account": "binance",
-            "name": "Binance",
-            "url": "https://www.binance.com/",
-            "rpc": {
-                "privacyLevel": "null",
-                "privacyPolicy": ["https://www.bnbchain.org/en/privacy-policy/"]
-            }
-        },
-        {
-            "account": "llama",
-            "name": "Llama Nodes",
-            "url": "https://llamanodes.com/",
-            "rpc": {
-                "privacyLevel": "privacy",
-                "privacyPolicy": [
-                    "https://llamanodes.notion.site/Privacy-Practices-f20fd8fdd02a469d9d4f42a5989bb936"
-                ]
-            }
-        },
-        {
-            "account": "moonbeamFoundation",
-            "name": "Moonbeam Foundation",
-            "url": "https://moonbeam.network/",
-            "rpc": {
-                "privacyLevel": "null",
-                "privacyPolicy": ["https://moonbeam.foundation/privacy-policy/"]
-            }
-        },
-        {
-            "account": "polygonLabs",
-            "name": "Polygon Labs",
-            "url": "https://polygon.technology/",
-            "rpc": {
-                "privacyLevel": "null",
-                "privacyPolicy": ["https://polygon.technology/privacy-policy/"]
-            }
-        }
-    ]
+  "accounts": [
+    {
+      "id": "a4aa57b33c9737748b5a4c3efa61e51a8086bec4f771ef8811a23c51165cae6f",
+      "account": "arbitrumFoundation",
+      "name": "Arbitrum Foundation",
+      "url": "https://arbitrum.foundation/",
+      "rpc": {
+        "privacyLevel": "no info",
+        "privacyPolicy": [
+          "not found"
+        ]
+      }
+    },
+    {
+      "account": "indexCoop",
+      "name": "Index Coop Protocol",
+      "url": "https://indexcoop.com/",
+      "contracts": {
+        "indexToken": "eth"
+      },
+      "wallets": [
+        "indexCoopTreasury"
+      ]
+    },
+    {
+      "account": "chainlink",
+      "name": "Chainlink Labs",
+      "url": "https://chain.link/",
+      "contracts": {
+        "olink": [
+          "wbtc.arb",
+          "weth.arb",
+          "usdc.arb"
+        ]
+      }
+    },
+    {
+      "account": "circle",
+      "name": "Circle Internet Financial Limited",
+      "url": "https://www.circle.com/",
+      "contracts": {
+        "usdc": [
+          "arb"
+        ]
+      }
+    },
+    {
+      "account": "wethCommunity",
+      "name": "Wrapped Ethereum Community",
+      "url": "https://weth.io/",
+      "contracts": {
+        "weth": [
+          "arb"
+        ]
+      }
+    },
+    {
+      "account": "wbtc",
+      "name": "Wrapped Bitcoin Community",
+      "url": "https://wbtc.network/",
+      "contracts": {
+        "werc20": [
+          "wbtc.arb"
+        ]
+      }
+    },
+    {
+      "account": "binance",
+      "name": "Binance",
+      "url": "https://www.binance.com/",
+      "rpc": {
+        "privacyLevel": "null",
+        "privacyPolicy": [
+          "https://www.bnbchain.org/en/privacy-policy/"
+        ]
+      }
+    },
+    {
+      "account": "llama",
+      "name": "Llama Nodes",
+      "url": "https://llamanodes.com/",
+      "rpc": {
+        "privacyLevel": "privacy",
+        "privacyPolicy": [
+          "https://llamanodes.notion.site/Privacy-Practices-f20fd8fdd02a469d9d4f42a5989bb936"
+        ]
+      }
+    },
+    {
+      "account": "moonbeamFoundation",
+      "name": "Moonbeam Foundation",
+      "url": "https://moonbeam.network/",
+      "rpc": {
+        "privacyLevel": "null",
+        "privacyPolicy": [
+          "https://moonbeam.foundation/privacy-policy/"
+        ]
+      }
+    },
+    {
+      "account": "polygonLabs",
+      "name": "Polygon Labs",
+      "url": "https://polygon.technology/",
+      "rpc": {
+        "privacyLevel": "null",
+        "privacyPolicy": [
+          "https://polygon.technology/privacy-policy/"
+        ]
+      }
+    }
+  ]
 }

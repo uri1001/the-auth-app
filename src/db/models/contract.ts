@@ -6,6 +6,7 @@ interface Instance {
     deployBlock: bigint
     deployTxHash: string // uk - network
     erc20?: {
+        name: string
         symbol: string
         uSymbol: string
         decimals: number
@@ -16,6 +17,7 @@ interface Instance {
 }
 
 interface Contract {
+    id: string // ak
     contract: string // pk
     name: string
     type: 'erc20' | 'oracle' | 'multisig' | 'null'
@@ -26,33 +28,104 @@ interface Contract {
 }
 
 export const contractModel: Contract = {
-    contract: 'contract key [ string ] - pk',
-    name: 'contract name [ string ]',
     // @ts-expect-error invalid type
-    type: 'contract type [ erc20 | oracle | multisig | null ]',
+    id: {
+        description: 'internal unique sha256 hash id - ak',
+        format: 'hex sha256 digest output of the json object - string',
+    },
+    // @ts-expect-error invalid type
+    contract: {
+        description: 'unique alphanumerical key - pk',
+        format: 'more than 0 characters & less than 21 - string',
+    },
+    // @ts-expect-error invalid type
+    name: {
+        description: 'alphanumerical name',
+        format: 'more than 0 characters & less than 41 - string',
+    },
+    // @ts-expect-error invalid type
+    type: {
+        description: 'type',
+        format: 'erc20 | oracle | multisig | null',
+    },
     instances: [
         {
-            instance: 'contract instance key [ string ] - pk',
-            network: 'contract instance network key [ string ] - fk - networks',
-            address: 'contract instance address [ string ] - uk - networks',
-            implAddress: 'contract instance implementation address [ string ]',
             // @ts-expect-error invalid type
-            deployBlock: 'contract instance deploy block [ bigint ]',
-            deployTxHash: 'contract instance deploy tx hash [ string ] - uk - networks',
+            instance: {
+                description: 'instance alphanumerical unique key - pk',
+                format: 'more than 0 characters & less than 21 - string',
+            },
+            // @ts-expect-error invalid type
+            network: {
+                description: 'instance network key - fk [network]',
+                format: '<network-pk>',
+            },
+            // @ts-expect-error invalid type
+            address: {
+                description: 'instance address as of eip-1191 - uk [network]',
+                format: 'evm address standard format checksum encoded - [0x + 40 hexadecimal characters]',
+            },
+            // @ts-expect-error invalid type
+            implAddress: {
+                description: 'instance implementation address as of eip-1191',
+                format: 'evm address standard format checksum encoded - [0x + 40 hexadecimal characters]',
+            },
+            // @ts-expect-error invalid type
+            deployBlock: {
+                description: 'instance deploy transaction block number',
+                format: 'integer & positive number - bigint',
+            },
+            // @ts-expect-error invalid type
+            deployTxHash: {
+                description: 'instance deploy transaction hash - uk [network]',
+                format: 'evm 32 bytes keccak256 transaction hash - [0x + 64 hexadecimal characters]',
+            },
             erc20: {
-                symbol: 'erc20 contract token symbol [ string ]',
-                uSymbol: 'erc20 contract token smallest unit symbol [ string ]',
                 // @ts-expect-error invalid type
-                decimals: 'erc20 contract token decimals [ number ]',
+                name: {
+                    description: 'erc20 token offical name',
+                    format: 'more than 0 characters & less than 21 - string',
+                },
+                // @ts-expect-error invalid type
+                symbol: {
+                    description: 'erc20 token symbol',
+                    format: 'more than 0 characters & less than 5 & uppercase - string',
+                },
+                // @ts-expect-error invalid type
+                uSymbol: {
+                    description: 'erc20 token smallest unit symbol',
+                    format: 'more than 0 characters & less than 7 - string',
+                },
+                // @ts-expect-error invalid type
+                decimals: {
+                    description: 'erc20 token decimals',
+                    format: 'natural integer - number',
+                },
             },
             oracle: {
-                erc20: 'oracle contract erc20 token price feed [ string ] - contract pk - instance pk',
+                // @ts-expect-error invalid type
+                erc20: {
+                    description: 'oracle erc20 token contract instance unique key - fk [contract]',
+                    format: '<contract-pk>.<contract-instance-pk> - string',
+                },
             },
         },
     ],
-    sourceCode: 'contract source code url [ string ]',
-    abi: 'contract abi json file name [ string ] - uk',
-    abiSha256: 'contract abi json file sha256 output [ string ] - uk',
+    // @ts-expect-error invalid type
+    sourceCode: {
+        descriptio: 'source code url',
+        format: 'start with "https://" & have more than 9 characters - string',
+    },
+    // @ts-expect-error invalid type
+    abi: {
+        description: 'abi json file name - uk',
+        format: 'exact filename of the contract abi json file in abis folder - string',
+    },
+    // @ts-expect-error invalid type
+    abiSha256: {
+        description: 'abi json file sha256 digest output - uk',
+        format: 'hex sha256 digest output - string',
+    },
 }
 
 export default Contract

@@ -93,8 +93,11 @@
                 </div>
 
                 <div id="element-input" class="hidden">
-                    <label>Database Element:</label>
-                    <textarea id="element" name="element" rows="10" cols="50"></textarea>
+                    <label>Data Element</label>
+                    <br />
+                    <textarea id="element" name="element" rows="20" cols="90"></textarea>
+                    <br />
+                    <p>Enter the JSON Database Element</p>
                 </div>
 
                 <div>
@@ -124,7 +127,13 @@
         <br />
         <hr />
 
-        <p><strong>Query Result</strong></p>
+        <p><b>Query Result</b></p>
+        <br />
+        <div id="res-msg">Query Response Message</div>
+        <br />
+        <div id="msg">{{response-msg}}</div>
+        <br />
+        <div id="res-data">Query Response Data</div>
         <br />
         <div id="data">{{response-data}}</div>
         <br />

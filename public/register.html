@@ -41,55 +41,33 @@
                     <option value="slow">Slow</option>
                 </select>
             </div>
+            <br />
             <div>
                 <input type="submit" value="Register User" />
             </div>
         </form>
 
         <br />
+        <hr />
         <br />
 
         <p>Verifiable Credential Issuance</p>
         <form action="/vc/register" method="post">
             <div>
                 <label>Username:</label>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="walrus"
-                    pattern="^[A-Za-z][A-Za-z0-9]{2,}$"
-                    required
-                />
+                <input type="text" name="username" placeholder="walrus" required />
             </div>
             <div>
                 <label>First Name:</label>
-                <input
-                    type="text"
-                    name="first_name"
-                    placeholder="Walrus"
-                    pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
+                <input type="text" name="first_name" placeholder="Walrus" required />
             </div>
             <div>
                 <label>Last Name:</label>
-                <input
-                    type="text"
-                    name="last_name"
-                    placeholder="Wild"
-                    pattern="^[A-Za-z][A-Za-z]{1,}$"
-                    required
-                />
+                <input type="text" name="last_name" placeholder="Wild" required />
             </div>
             <div>
                 <label>Email:</label>
-                <input
-                    type="text"
-                    name="email"
-                    placeholder="walrus@me.io"
-                    pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                    required
-                />
+                <input type="text" name="email" placeholder="walrus@me.io" required />
             </div>
             <div>
                 <label>Company Identifier:</label>
@@ -111,6 +89,7 @@
                 <label>Role:</label>
                 <input type="text" name="employee_role" placeholder="Blockchain Engineer" required />
             </div>
+            <br />
             <div>
                 <input type="submit" value="Issue Credential" />
             </div>
