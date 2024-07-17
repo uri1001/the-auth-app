@@ -6,7 +6,7 @@ import path from 'path'
 import { accountModel, contractModel, networkModel, userModel, walletModel } from '../../db/index.js'
 import { queryDb } from '../../services/index.js'
 
-import { root } from '../../system.js'
+import { rootPublic } from '../../system.js'
 
 const router = express.Router()
 
@@ -15,7 +15,7 @@ const jsonToHtml = (jsonString: string): string =>
 
 router.get('/', passport.authenticate('jwt', { session: false }), (_req: Request, res: Response) => {
     // load the HTML template
-    let html = fs.readFileSync(path.join(root, 'db.html'), 'utf-8')
+    let html = fs.readFileSync(path.join(rootPublic, 'db.html'), 'utf-8')
 
     // replace the placeholder with the JSON data
     html = html.replace('{{account-model}}', jsonToHtml(JSON.stringify(accountModel, null, 4)))
@@ -38,7 +38,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req: Request
     const msg = { result: 'successful database query' }
 
     // load the HTML template
-    let html = fs.readFileSync(path.join(root, 'db.html'), 'utf-8')
+    let html = fs.readFileSync(path.join(rootPublic, 'db.html'), 'utf-8')
 
     // replace the placeholder with the JSON data
     html = html.replace('{{response-msg}}', JSON.stringify(msg, null, 2))

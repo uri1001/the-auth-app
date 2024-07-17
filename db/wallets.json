@@ -1,26 +1,15 @@
 {
     "wallets": [
         {
+            "id": "e459e536a6f4d6ed6e9f75483c81daca06fad4ab902bf5eeaf4be47206b778b3",
             "wallet": "indexCoopTreasury",
             "name": "Index Coop Multisig Wallet",
-            "account": "indexCoop",
-            "type": "multisig",
             "instances": {
                 "eth": {
                     "instance": "eth",
+                    "type": "multisig",
                     "network": "mainnet",
-                    "address": "0x9467cfADC9DE245010dF95Ec6a585A506A8ad5FC",
-                    "multisig": {
-                        "threshold": 3,
-                        "signers": [
-                            "0x60fAB7c35E3728B46a88f82ddeee46dF1d414A45",
-                            "0x57D0C0f6458284884F0654CAa53811D013bB6f20",
-                            "0x3536bED4d374e18C19Cf28E6d0326f640B6C2Bfd",
-                            "0xD19e5913C33E7d69a7f66c090760B3e611106b9A",
-                            "0xA3EB02Ffa9bF1965629fa2731b16fFEc87b86848"
-                        ],
-                        "contract": "gnosisSafe-index.eth"
-                    }
+                    "address": "0x9467cfADC9DE245010dF95Ec6a585A506A8ad5FC"
                 }
             }
         }

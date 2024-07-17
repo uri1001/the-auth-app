@@ -2,6 +2,7 @@ import express, { type Request, type Response } from 'express'
 
 import passport from 'passport'
 
+import { pwdSchema, validate } from '../../middleware/index.js'
 import { AuthStrategies, loginUser, registerUser } from '../../services/index.js'
 
 const router = express.Router()
@@ -21,7 +22,7 @@ router.post(
 )
 
 // register
-router.post('/register', (req: Request, res: Response): void => {
+router.post('/register', validate(pwdSchema), (req: Request, res: Response): void => {
     if (req.body == null) throw new Error('request body undefined')
 
     // register user - ensures user not registered

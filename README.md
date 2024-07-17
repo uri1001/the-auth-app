@@ -206,19 +206,19 @@ See the [open issues](https://github.com/uri1001/the-auth-app/issues) for a full
 -   system os - bash command
 
     ```sh
-    npm run start
+    npm run server
     ```
 
 -   system os - powershell command
 
     ```sh
-    npm run start:pwsh
+    npm run server:pwsh
     ```
 
 -   docker instance - command
 
     ```sh
-    npm run start:docker
+    npm run server:docker
     ```
 
 <br />

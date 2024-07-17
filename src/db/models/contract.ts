@@ -106,7 +106,7 @@ export const contractModel: Contract = {
                 // @ts-expect-error invalid type
                 erc20: {
                     description: 'oracle erc20 token contract instance unique key - fk [contract]',
-                    format: '<contract-pk>.<contract-instance-pk> - string',
+                    format: '<contract-pk>-<contract-instance-pk> - string',
                 },
             },
         },

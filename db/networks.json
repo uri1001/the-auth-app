@@ -1,6 +1,7 @@
 {
     "networks": [
         {
+            "id": "68f9a958529966fd6ee330bf1da94327e8a2dfbc12c79662d9ace61b7171a911",
             "network": "arbitrumOne",
             "networkId": 42161,
             "name": "Arbitrum One",
@@ -42,6 +43,7 @@
             "testnet": false
         },
         {
+            "id": "db9467be0c0256a20ac666e057a849d098c1286b1d9b7d7a14d7e60aadf1e520",
             "network": "bsc",
             "networkId": 56,
             "name": "BNB Smart Chain",
@@ -83,6 +85,7 @@
             "testnet": false
         },
         {
+            "id": "ed212de04cb1568ff1b949e5535879b77bd1c8a9270a2f8eb7729d3f42534231",
             "network": "mainnet",
             "networkId": 1,
             "name": "Ethereum Mainnet",
@@ -126,6 +129,7 @@
             "testnet": false
         },
         {
+            "id": "9297126eadbf9b87513f6448177a79e13ffd06a49e02e359cb621b2edfdab34b",
             "network": "moonbeam",
             "networkId": 1284,
             "name": "Moonbeam",
@@ -169,6 +173,7 @@
             "testnet": false
         },
         {
+            "id": "f39cc71e6b4cef8f70e6ef1687c88850a7ab3b7135144d95832c26e19a9a936a",
             "network": "polygon",
             "networkId": 137,
             "name": "Polygon",

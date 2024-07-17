@@ -1,6 +1,7 @@
 {
     "contracts": [
         {
+            "id": "7886e1cc4470d1abdffa73adb0031d5a9c85335b9227f4bd5533a6d70e559562",
             "contract": "werc20",
             "name": "Standard Wrapped ERC20",
             "type": "erc20",
@@ -13,6 +14,7 @@
                     "deployBlock": 2591,
                     "deployTxHash": "0x8ebe1945f039f865af8b3079df3819534340ee41a5e6b8bfefb9c36a857778c9",
                     "erc20": {
+                        "name": "Wrapped Bitcoin",
                         "symbol": "WBTC",
                         "uSymbol": "uWBTC",
                         "decimals": 8
@@ -24,6 +26,7 @@
             "abiSha256": "0c8f93846544dc9df779c83ed6886801b86b7f477fcbd2a0c33cc89bcdc10f7a"
         },
         {
+            "id": "908bf95cfe1147c5b8476689c43b0586534eb64e77207d7cc353c15de24bccba",
             "contract": "weth",
             "name": "Wrapped Ether",
             "type": "erc20",
@@ -36,6 +39,7 @@
                     "deployBlock": 55,
                     "deployTxHash": "0x1555f3be9c09cf5bf802109366853cfda812e7a177e755aeb8d9566c5728747e",
                     "erc20": {
+                        "name": "Wrapped Ether",
                         "symbol": "WETH",
                         "uSymbol": "uWETH",
                         "decimals": 18
@@ -47,6 +51,7 @@
             "abiSha256": "e73ea88352cc463141fc368ff5ae8e8d44f831f86e823859b93053ad6bf5f9c7"
         },
         {
+            "id": "365d22fea4bdfe203d7fb316fa1b8a3c6c4b4397cdc018c929e47972a2c47769",
             "contract": "usdc",
             "name": "USD Coin",
             "type": "erc20",
@@ -59,6 +64,7 @@
                     "deployBlock": 34266938,
                     "deployTxHash": "0xec773df8d80c83b23c74d0368f63d095f040c5fc6f9e749d0b429a7410c62662",
                     "erc20": {
+                        "name": "Circle US Dollar",
                         "symbol": "USDC",
                         "uSymbol": "uUSDC",
                         "decimals": 6
@@ -70,6 +76,7 @@
             "abiSha256": "773956378f8eb4aaa19a2f2e66c2d84c8e7fec516e519b7369eea0e443118684"
         },
         {
+            "id": "a50057bd0fcae264a9f140c4f86df693465986e005c4d028c3abd8d2afded124",
             "contract": "olink",
             "name": "Chainlink ERC20 Price Feed Oracle",
             "type": "oracle",
@@ -82,7 +89,7 @@
                     "deployBlock": 101519,
                     "deployTxHash": "0xad5a7487ae0c93422aeca73ae7f647f3d2ae3ce853b3839df31bfd4260b41872",
                     "oracle": {
-                        "werc20": "wbtc.arb"
+                        "erc20": "werc20-wbtc.arb"
                     }
                 },
                 "weth.arb": {
@@ -93,7 +100,7 @@
                     "deployBlock": 101490,
                     "deployTxHash": "0x696c90687c36860e9cb15dc9a6904d52463d5effdc2692d0107a024da62a424b",
                     "oracle": {
-                        "weth": "arb"
+                        "erc20": "weth-arb"
                     }
                 },
                 "usdc.arb": {
@@ -104,7 +111,7 @@
                     "deployBlock": 101256,
                     "deployTxHash": "0x55aadc3253ac28ae88b1a00c22c357fab6c22f0bf7a74e48530ce70f764ac501",
                     "oracle": {
-                        "usdc": "arb"
+                        "erc20": "usdc-arb"
                     }
                 }
             },
@@ -113,6 +120,7 @@
             "abiSha256": "08ef334d7d4d1eb3eb55d79c61d11de45820d94ba312ceed78a1d1f85cd1dbf0"
         },
         {
+            "id": "0ee970026f814dc9650533e4725f443a3e37b288d4c1dce49f6946dfc5841033",
             "contract": "gnosisSafe",
             "name": "Gnosis Multi-Signature Wallet",
             "type": "multisig",
@@ -131,6 +139,7 @@
             "abiSha256": "a04f77f1092cdb31a4ba9e3045ebd8533253ee9707ec69d87b21f0f1578d2bc0"
         },
         {
+            "id": "e7b41065a57e71b78ad47f5664d19618147177a9616833c0e42f663b3ebd6f7a",
             "contract": "indexToken",
             "name": "Index Coop Governance Token",
             "type": "erc20",
@@ -141,7 +150,13 @@
                     "address": "0x0954906da0Bf32d5479e25f46056d22f08464cab",
                     "implAddress": "0x0954906da0Bf32d5479e25f46056d22f08464cab",
                     "deployBlock": 11000455,
-                    "deployTxHash": "0x7d1f84b357744377288299d122d91020fed375fbd7548400722abeb56413027c"
+                    "deployTxHash": "0x7d1f84b357744377288299d122d91020fed375fbd7548400722abeb56413027c",
+                    "erc20": {
+                        "name": "Index Coop Token",
+                        "symbol": "INDEX",
+                        "uSymbol": "uINDEX",
+                        "decimals": 18
+                    }
                 }
             },
             "sourceCode": "https://github.com/IndexCoop/index-coop-smart-contracts/blob/master/contracts/token/IndexToken.sol",

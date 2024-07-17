@@ -38,4 +38,6 @@ const __filename = fileURLToPath(import.meta.url)
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = path.dirname(__filename)
 
-export const root = path.join(__dirname, '..', 'public')
+export const rootPublic = path.join(__dirname, '..', 'public')
+
+export const rootDb = path.join(__dirname, '..', 'db')

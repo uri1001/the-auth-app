@@ -6,7 +6,7 @@ import path from 'path'
 
 import { fetchDb } from '../../db/index.js'
 
-import { root } from '../../system.js'
+import { rootPublic } from '../../system.js'
 
 const router = express.Router()
 
@@ -22,7 +22,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req: Request,
     const user = fetchDb('users', 'user', jwt.sub)
 
     // load the HTML template
-    const template = fs.readFileSync(path.join(root, 'user.html'), 'utf-8')
+    const template = fs.readFileSync(path.join(rootPublic, 'user.html'), 'utf-8')
 
     // replace the placeholder with the JSON data
     let html

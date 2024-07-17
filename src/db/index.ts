@@ -14,3 +14,5 @@ export { contractModel } from './models/contract.js'
 export { networkModel } from './models/network.js'
 export { userModel } from './models/user.js'
 export { walletModel } from './models/wallet.js'
+
+export { decryptFileSync as decryptDb, encryptFileSync as encryptDb } from './utils/crypto.js'

@@ -9,7 +9,6 @@ interface Wallet {
     id: string // ak
     wallet: string // pk
     name: string
-    account: string // fk - pk account
     instances: Record<string, Instance>
 }
 

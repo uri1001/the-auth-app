@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { root } from '../../system.js'
+import { rootPublic as root } from '../../system.js'
 
 const router = express.Router()
 
