@@ -1,17 +1,17 @@
 {
-    "name": "the-node-passport-app",
+    "name": "the-auth-app",
     "version": "0.1.0",
     "description": "Authentication & Authorization Node App Project With Passport",
     "author": "Oriol Rodríguez Setó <uri1001@pm.me>",
     "license": "MIT",
     "main": "src/index.ts",
     "type": "module",
-    "homepage": "https://github.com/uri1001/the-node-passport-app#readme",
+    "homepage": "https://github.com/uri1001/the-auth-app#readme",
     "repository": {
         "type": "git",
-        "url": "https://github.com/uri1001/the-node-passport-app"
+        "url": "https://github.com/uri1001/the-auth-app"
     },
-    "bugs": "https://github.com/uri1001/the-node-passport-app/issues",
+    "bugs": "https://github.com/uri1001/the-auth-app/issues",
     "contributors": [
         "uri1001 <uri1001@pm.me>"
     ],

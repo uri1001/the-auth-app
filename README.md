@@ -13,40 +13,24 @@
     Authentication & Authorization Node Server App Project
     <br />
     <br />
-    <a href="https://github.com/uri1001/the-auth-app/graphs/contributors">
-        <img src="https://img.shields.io/github/contributors/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Contributors">
-    </a>
-    <a href="https://github.com/uri1001/the-auth-app/forks">
-        <img src="https://img.shields.io/github/forks/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Forks">
+    <a href="https://github.com/uri1001/the-auth-app/issues">
+        <img src="https://img.shields.io/badge/version-0.1.0-X?colorA=21262d&colorB=161b22&style=flat" alt="Version">
     </a>
     <a href="https://github.com/uri1001/the-auth-app/issues">
         <img src="https://img.shields.io/github/issues/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Issues">
-    </a>
-    <a href="https://github.com/uri1001/the-auth-app/graphs/commit-activity">
-        <img src="https://img.shields.io/github/commit-activity/m/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Commits">
-    </a>
-    <a href="https://github.com/uri1001/the-auth-app/pulse">
-        <img src="https://img.shields.io/github/watchers/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Watchers">
-    </a>
-    <br />
-    <a href="https://github.com/uri1001/the-auth-app/issues">
-        <img src="https://img.shields.io/badge/version-0.1.0-X?colorA=21262d&colorB=161b22&style=flat" alt="Version">
     </a>
     <a href="https://github.com/uri1001/the-auth-app/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="License">
     </a>
     <br />
-    <br />
-    <a href="https://github.com/uri1001/the-auth-app/">
-        <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white" alt="Ethereum">
+    <a href="https://github.com/uri1001/the-auth-app/graphs/commit-activity">
+        <img src="https://img.shields.io/github/commit-activity/m/uri1001/the-auth-app.svg?colorA=21262d&colorB=161b22&style=flat" alt="Commits">
     </a>
     <br />
     <br />
     <a href="https://github.com/uri1001/the-auth-app">
         <img src="https://img.shields.io/badge/Explore-Docs-X?colorA=21262d&colorB=161b22&style=for-the-badge" alt="Explore-Docs">
     </a>
-    <br />
-    <br />
     <a href="https://github.com/uri1001/the-auth-app/issues">
         <img src="https://img.shields.io/badge/Report-Bug-X?colorA=21262d&colorB=161b22&style=for-the-badge" alt="Report-Bug">
     </a>
